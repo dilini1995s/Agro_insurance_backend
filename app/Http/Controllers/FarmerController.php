@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use App\User;
-class UserController extends Controller
+use App\Farmer;
+class FarmerController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -21,9 +21,12 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $rules = [
-            'username' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            
+            
+            'NIC' => 'required',
+            'Name' => 'required',
+            'Phone' => 'required',
+            'Password' => 'required',
          ];
  
         $customMessages = [
@@ -33,15 +36,19 @@ class UserController extends Controller
  
         try {
             $hasher = app()->make('hash');
-            $username = $request->input('username');
-            $email = $request->input('email');
-            $password = $hasher->make($request->input('password'));
+           
+            $NIC = $request->input('NIC');
+            $Name = $request->input('Name');
+            $Phone = $request->input('Phone');
+            $password = $hasher->make($request->input('Password'));
  
-            $save = User::create([
-                'username'=> $username,
-                'email'=> $email,
-                'password'=> $password,
-                'api_token'=> ''
+            $save = Farmer::create([
+               
+                'NIC'=> $NIC,
+                'Name' =>  $Name,
+                'Phone'=>$Phone,
+                'Password'=> $password,
+               // 'api_token'=> ''
             ]);
             $res['status'] = true;
             $res['message'] = 'Registration success!';
@@ -55,7 +62,7 @@ class UserController extends Controller
  
     public function get_user()
     {
-        $user = User::all();
+        $user = Farmer::all();
         if ($user) {
               $res['status'] = true;
               $res['message'] = $user;
@@ -67,5 +74,6 @@ class UserController extends Controller
  
           return response($res);
         }
+       console.log("hello");
     }
 }
