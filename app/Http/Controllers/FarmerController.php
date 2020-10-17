@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Farmer;
+use App\Check;
 class FarmerController extends Controller
 {
     /**
@@ -17,6 +18,15 @@ class FarmerController extends Controller
     }
 
     //
+    public function find(Request $request){
+
+            $check=new Check;
+            $check->id=$request->input('id');
+            $check->name=$request->input('name');
+            $check->crop=$request->input('crop');
+           $check->save();
+
+    }
 
     public function register(Request $request)
     {

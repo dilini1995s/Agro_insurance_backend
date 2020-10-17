@@ -16,5 +16,9 @@ $router->get('/', function () use ($router) {
 });
 $router->post('/login', 'LoginController@login');
 $router->post('/register', 'FarmerController@register');
+$router->post('/finn', 'CheckController@fin');
+$router->post('/policy', 'LandController@add');
 $router->get('/user', [ 'uses' => 'FarmerController@get_user']);
+$router->get('/detail/{va}', [ 'uses' => 'PolicyController@showPolicy']);
+$router->get('/de/{va1}/{va2}', [ 'uses' => 'PolicyfarmerController@showfarmersPolicy']);
 $router->get('/us', [ 'uses' => 'CompanyController@get_us']);
