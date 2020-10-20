@@ -20,7 +20,7 @@ class PolicyfarmerController extends Controller
 
     //
 
-    public function add(Request $request)
+    /*public function add(Request $request)
     {
        /* $rules = [
             
@@ -39,7 +39,7 @@ class PolicyfarmerController extends Controller
         ];
         $this->validate($request, $rules, $customMessages);*/
  
-        try {
+       /* try {
           
           
 
@@ -58,7 +58,7 @@ class PolicyfarmerController extends Controller
                 'NIC'=> $ni,
                // 'api_token'=> ''
             ]);*/
-            $res['status'] = true;
+           /* $res['status'] = true;
             $res['message'] = 'insert success!';
             return response($res, 200);
         } catch (\Illuminate\Database\QueryException $ex) {
@@ -66,7 +66,7 @@ class PolicyfarmerController extends Controller
             $res['message'] = $ex->getMessage();
             return response($res, 500);
         }
-    }
+}*/
     public function showfarmersPolicy($va1,$va2)
     {
         //return response()->json(Insurance::find($companies_id));
@@ -77,11 +77,11 @@ class PolicyfarmerController extends Controller
         $res['message'] = $user;
 
         return response($res);
-  }else{
-    $res['status'] = false;
-    $res['message'] = 'Cannot find user!';
+        }else{
+            $res['status'] = false;
+             $res['message'] = 'Cannot find user!';
 
-    return response($res);
-  }
-}
+         return response($res);
+             }
+        }
 }

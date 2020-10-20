@@ -41,21 +41,30 @@ class LandController extends Controller
         try {
           
            $land=new Land;
-            $land->land_number = $request->input('land_num');
-            $land->Gramaseva_division = $request->input('gramasewa_division');
-            $land->District = $request->input('district');
-            $land->Size= $request->input('size');
-            $land->Crop= $request->input('crop');
-            $land->Owership = $request->input('owership');
-            $land->NIC= $request->input('nic');
-            $land->save();
+            
 
             $fa=new PolicyFarmer;
+            if( $request->input('selectland')==""){
+                $land->land_number = $request->input('land_num');
+                $land->Gramaseva_division = $request->input('gramasewa_division');
+                $land->District = $request->input('district');
+                $land->Owership = $request->input('owership');
+                $land->NIC= $request->input('nic');
+                $land->save();
+            }
             $fa->start_date=$request->input('Start_date');
             $fa->end_date=$request->input('End_date');
             $fa->risk_type=$request->input('risk');
+            $fa->Size= $request->input('size');
+            $fa->Crop= $request->input('crop');
             $fa->policy_id=$request->input('type');
             $fa->NIC= $request->input('nic');
+            if( $request->input('selectland')==""){
+                $fa->land_number = $request->input('land_num');
+            }
+           else if($request->input('land_num')==""){
+            $fa->land_number = $request->input('selectland');
+           }
             $fa->save();
             /*$save = Land::create([
                
@@ -79,4 +88,20 @@ class LandController extends Controller
     }
  
    
+    public function getland($nic)
+    {
+        //return response()->json(Insurance::find($companies_id));
+       $user=Land::where('NIC', $nic)->get();
+       if ($user) {
+        $res['status'] = true;
+        $res['message'] = $user;
+
+        return response($res);
+        }else{
+            $res['status'] = false;
+             $res['message'] = 'Cannot find user!';
+
+         return response($res);
+             }
+        }
 }

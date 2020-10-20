@@ -14,7 +14,7 @@ class CreateFarmersTable extends Migration
     public function up()
     {
         Schema::create('farmers', function (Blueprint $table) {
-            $table->string('NIC');
+            $table->string('NIC')->primary();
             $table->string('Name');
             $table->string('Address')->nullable();
             $table->integer('Phone');

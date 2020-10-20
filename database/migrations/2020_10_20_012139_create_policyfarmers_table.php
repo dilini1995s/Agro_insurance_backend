@@ -23,6 +23,9 @@ class CreatePolicyfarmersTable extends Migration
 			$table->string('status')->default("pending");
 			$table->boolean('verification')->default(false);
             $table->integer('policy_id')->nullable();
+			$table->integer('Size');
+			$table->string('Crop');
+			$table->string('land_number');
             $table->timestamps();
         });
     }

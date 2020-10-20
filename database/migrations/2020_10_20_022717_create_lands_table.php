@@ -19,10 +19,8 @@ class CreateLandsTable extends Migration
             $table->string('District');
             $table->string('Owership');
             $table->string('Address')->nullable();
-            $table->integer('Size');
-            $table->string('Crop');
             $table->string('Agrarian_centre')->nullable();
-            $table->string('NIC')->foreign();
+            $table->string('NIC')->references('NIC')->on('farmers');
             $table->timestamps();
         });
     }
