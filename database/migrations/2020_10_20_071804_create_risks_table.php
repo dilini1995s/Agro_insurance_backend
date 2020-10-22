@@ -16,7 +16,7 @@ class CreateRisksTable extends Migration
         Schema::create('risks', function (Blueprint $table) {
             $table->id();
             $table->string('risk_type');
-            $table->integer('rate');
+            $table->float('risk_rate');
             $table->timestamps();
         });
     }

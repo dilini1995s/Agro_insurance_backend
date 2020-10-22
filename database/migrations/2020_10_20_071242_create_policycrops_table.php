@@ -17,7 +17,7 @@ class CreatePolicycropsTable extends Migration
             $table->foreignId('insurance_id');
             $table->foreignId('crop_id');
             $table->integer('claim_value_for_Acre');
-            $table->integer('rate');
+            $table->float('rate');
             $table->timestamps();
         });
     }

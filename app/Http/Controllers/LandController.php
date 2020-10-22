@@ -44,14 +44,15 @@ class LandController extends Controller
             
 
             $fa=new PolicyFarmer;
-            if( $request->input('selectland')==""){
-                $land->land_number = $request->input('land_num');
-                $land->Gramaseva_division = $request->input('gramasewa_division');
-                $land->District = $request->input('district');
-                $land->Owership = $request->input('owership');
-                $land->NIC= $request->input('nic');
-                $land->save();
-            }
+        if( $request->input('selectland')==""){
+            $land->land_number = $request->input('land_num');
+            $land->Gramaseva_division = $request->input('gramasewa_division');
+            $land->District = $request->input('district');
+            $land->Owership = $request->input('owership');
+            $land->NIC= $request->input('nic');
+            $land->save();
+        }
+
             $fa->start_date=$request->input('Start_date');
             $fa->end_date=$request->input('End_date');
             $fa->risk_type=$request->input('risk');
@@ -59,13 +60,15 @@ class LandController extends Controller
             $fa->Crop= $request->input('crop');
             $fa->policy_id=$request->input('type');
             $fa->NIC= $request->input('nic');
-            if( $request->input('selectland')==""){
+            
+        if( $request->input('selectland')==""){
                 $fa->land_number = $request->input('land_num');
-            }
-           else if($request->input('land_num')==""){
+        }
+        else if($request->input('land_num')==""){
             $fa->land_number = $request->input('selectland');
-           }
-            $fa->save();
+        }
+            
+        $fa->save();
             /*$save = Land::create([
                
                 'land_number'=> $land,
@@ -92,16 +95,17 @@ class LandController extends Controller
     {
         //return response()->json(Insurance::find($companies_id));
        $user=Land::where('NIC', $nic)->get();
-       if ($user) {
-        $res['status'] = true;
-        $res['message'] = $user;
+       if ($user){
+            $res['status'] = true;
+            $res['message'] = $user;
 
         return response($res);
         }else{
             $res['status'] = false;
-             $res['message'] = 'Cannot find user!';
+            $res['message'] = 'Cannot find user!';
 
          return response($res);
-             }
         }
+        
+    }
 }

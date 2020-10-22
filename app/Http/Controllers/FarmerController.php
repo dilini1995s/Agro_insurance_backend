@@ -24,7 +24,7 @@ class FarmerController extends Controller
             $check->id=$request->input('id');
             $check->name=$request->input('name');
             $check->crop=$request->input('crop');
-           $check->save();
+            $check->save();
 
     }
 
@@ -74,13 +74,13 @@ class FarmerController extends Controller
     {
         $user = Farmer::all();
         if ($user) {
-              $res['status'] = true;
-              $res['message'] = $user;
+            $res['status'] = true;
+            $res['message'] = $user;
  
-              return response($res);
+          return response($res);
         }else{
-          $res['status'] = false;
-          $res['message'] = 'Cannot find user!';
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
  
           return response($res);
         }
