@@ -70,7 +70,8 @@ class PolicyfarmerController extends Controller
     public function showfarmersPolicy($va1,$va2)
     {
         //return response()->json(Insurance::find($companies_id));
-       $user=Policyfarmer::where('NIC', $va1)->where('companies_id', $va2)->join('insurances','insurances.id','policy_id')
+       $user=Policyfarmer::where('NIC', $va1)->where('companies_id', $va2)->join('insurances',
+       'insurances.id','policy_id')
        ->select('policyfarmers.id','status','Name')->get();
        if ($user) {
         $res['status'] = true;
@@ -84,4 +85,25 @@ class PolicyfarmerController extends Controller
          return response($res);
              }
         }
+
+    public function addpremium(Request $request, $id)
+        {
+            $user= Policyfarmer::findOrFail($id);
+
+            $user->premium= $request->input('premium');
+           // $id=$request->input('land_num');
+            try{
+                $user->save();
+                $res['status'] = true;
+                $res['message'] = 'insert success!';
+                return response($res, 200);
+            }
+            
+        catch (\Illuminate\Database\QueryException $ex) {
+            $res['status'] = false;
+            $res['message'] = $ex->getMessage();
+            return response($res, 500);
+        }
+          
+    }  
 }

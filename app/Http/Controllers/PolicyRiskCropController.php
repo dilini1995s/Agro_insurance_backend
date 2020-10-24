@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Policycrop;
 use App\Policyrisk;
 use App\Policyfarmer;
+use App\Insurance;
 class PolicyRiskCropController extends Controller
 {
     /**
@@ -20,8 +21,26 @@ class PolicyRiskCropController extends Controller
     }
 
     //
+public function showrisks($company)
+    {
+     $user=Insurance::where('companies_id', $company)
+       ->join('policyrisks','insurance_id','insurances.id')->join('risks','risks.id','risk_id')
+       ->select('risk_type')
+       ->distinct()->get();
+       if ($user)
+        {
+                $res['status'] = true;
+                $res['message'] = $user;
+             return response($res);
+        }
+        else
+        {
+                $res['status'] = false;
+                $res['message'] = 'Cannot find user!';
 
-    
+            return response($res);
+        }
+    }         
   public function showfarmersPolicyrisks1($va1,$va2)
     {
      $user=Policyfarmer::where('policyfarmers.NIC', $va1)->where('companies_id', $va2)->join('insurances','insurances.id','policyfarmers.policy_id')
@@ -127,7 +146,7 @@ class PolicyRiskCropController extends Controller
             for($i=0;$i<$le;$i++){
                 if($user[$i]->size>5 && $user[$i]->Crop=='Paddy')
                         $va[$i]=$user[$i]->size*$user[$i]->claim_value_for_Acre*$user[$i]->rate;
-                if($user[$i]->size>3 && $user[$i]->Crop=='Maize' || $user[$i]->Crop=='Big Onion'){
+                if($user[$i]->size>3 && ($user[$i]->Crop=='Maize' || $user[$i]->Crop=='Big Onion' || $user[$i]->Crop=='Potato')){
                         $ex[$i]=$user[$i]->size-3;
                         $va[$i]=$ex[$i]*$user[$i]->claim_value_for_Acre*$user[$i]->rate;
                         }
