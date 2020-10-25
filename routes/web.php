@@ -21,6 +21,7 @@ $router->post('/premium/{id}', 'PolicyfarmerController@addpremium');
 $router->post('/policy', 'LandController@add');
 $router->get('/land/{nic}',['uses' =>  'LandController@getland']);
 $router->get('/user', [ 'uses' => 'FarmerController@get_user']);
+$router->get('/company', [ 'uses' => 'CompanyController@showcompanies']);
 $router->get('/detail/{va}', [ 'uses' => 'PolicyController@showPolicy']);
 $router->get('/de/{va1}/{va2}', [ 'uses' => 'PolicyfarmerController@showfarmersPolicy']);
 $router->get('/risk1/{va1}/{va2}', [ 'uses' => 'PolicyRiskCropController@showfarmersPolicyrisks1']);

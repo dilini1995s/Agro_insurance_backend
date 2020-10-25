@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 use App\Farmer;
+use App\Insurancecom;
 class LoginController extends Controller
 {
     /**
@@ -31,8 +32,16 @@ class LoginController extends Controller
       ];
         $this->validate($request, $rules, $customMessages);
          $NIC    = $request->input('NIC');
-        try {
+         $pass    = $request->input('Password');
+         $login1 = Insurancecom::where('username', $NIC)->where('password', $pass)->first();
+        if($login1){
+                $res['data1'] =  $login1;
+                $res['message'] = 'Success loginCompany';
+                return response($res, 200);
+                }
+       try {
             $login = Farmer::where('NIC', $NIC)->first();
+            
             if ($login) {
                 if ($login->count() > 0) {
                     if (Hash::check($request->input('Password'), $login->Password)) {
@@ -44,7 +53,7 @@ class LoginController extends Controller
                               $res['message'] = 'Success login';
                               $res['data'] =  $login;
                              // $res['api_token'] =  $api_token;
- 
+                             //$res['data1'] =  $login1;
                               return response($res, 200);
  
  

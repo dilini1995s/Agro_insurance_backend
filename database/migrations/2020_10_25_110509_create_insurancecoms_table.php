@@ -17,8 +17,12 @@ class CreateInsurancecomsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
+			$table->string('types')->nullable();
             $table->string('phone')->nullable();
             $table->string('Address')->nullable();
+            $table->string('username')->nullable();
+            $table->string('password')->nullable();
+            $table->binary('image')->nullable();
             $table->timestamps();
         });
     }
