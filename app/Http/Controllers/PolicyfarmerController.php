@@ -105,5 +105,24 @@ class PolicyfarmerController extends Controller
             return response($res, 500);
         }
           
-    }  
+    } 
+    public function showPolicy($id)
+        {
+           
+
+          
+        try{
+            $user= Policyfarmer::where('policyfarmers.id',$id)->join('insurances','insurances.id','policyfarmers.policy_id')->get();
+                $res['status'] = true;
+                $res['message'] = $user;
+                return response($res, 200);
+            }
+            
+        catch (\Illuminate\Database\QueryException $ex) {
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res, 500);
+        }
+          
+    }   
 }

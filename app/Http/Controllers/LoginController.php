@@ -6,6 +6,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 use App\Farmer;
 use App\Insurancecom;
+use App\Agent;
 class LoginController extends Controller
 {
     /**
@@ -34,11 +35,18 @@ class LoginController extends Controller
          $NIC    = $request->input('NIC');
          $pass    = $request->input('Password');
          $login1 = Insurancecom::where('username', $NIC)->where('password', $pass)->first();
+         $login2 = Agent::where('NIC', $NIC)->where('password', $pass)->first();
         if($login1){
                 $res['data1'] =  $login1;
                 $res['message'] = 'Success loginCompany';
                 return response($res, 200);
                 }
+
+        if($login2){
+                    $res['data2'] =  $login2;
+                    $res['message'] = 'Success login Agent';
+                    return response($res, 200);
+                    }       
        try {
             $login = Farmer::where('NIC', $NIC)->first();
             

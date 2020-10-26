@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 //use Illuminate\Validation\ValidationException;
 use App\Land;
+use App\Agent;
+use App\Farmer;
 use App\PolicyFarmer;
+use App\Farmeragent;
 class LandController extends Controller
 {
     /**
@@ -19,7 +23,7 @@ class LandController extends Controller
 
     //
 
-    public function add(Request $request)
+    public function add(Request $request,$id)
     {
        /* $rules = [
             
@@ -37,13 +41,26 @@ class LandController extends Controller
              'required' => 'Please fill attribute :attribute'
         ];
         $this->validate($request, $rules, $customMessages);*/
- 
+       
         try {
-          
+            /*$user= $request->input('id');
+            DB::table('farmers')
+            ->where("NIC", '=',  $id)
+            ->update(['Agent_id'=> $user]);*/
+            //$user= Farmer::find('NIC', '=', $id);
+
+            $ag=new Farmeragent;
            $land=new Land;
             
-
+          // $user->save();
             $fa=new PolicyFarmer;
+            if( (($ag->NIC==$request->input('nic')) and ($ag->id!=$request->input('id'))) || (($ag->NIC!=$request->input('nic')) and ($ag->id==$request->input('id')))){
+                $ag->NIC = $request->input('nic');
+                $ag->id = $request->input('id');
+                $ag->save();
+            }    
+                
+               
         if( $request->input('selectland')==""){
             $land->land_number = $request->input('land_num');
             $land->Gramaseva_division = $request->input('gramasewa_division');
@@ -108,4 +125,6 @@ class LandController extends Controller
         }
         
     }
+
+   
 }
