@@ -16,7 +16,6 @@ class CreateFarmeragentsTable extends Migration
         Schema::create('farmeragents', function (Blueprint $table) {
             $table->string('NIC');
             $table->integer('id');
-            $table->unique(['NIC','id']);
             $table->timestamps();
         });
     }

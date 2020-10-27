@@ -62,12 +62,18 @@ public function showrisks($company)
           for($i=0;$i<$le;$i++){
               $ra[$i]=$user[$i]->size*$user[$i]->claim_value_for_Acre*$user[$i]->risk_rate;
            
-              if($user[$i]->size>5 && $user[$i]->Crop=='Paddy')
-                 $va[$i]=$user[$i]->size*$user[$i]->claim_value_for_Acre*$user[$i]->rate+$ra[$i];
-              if($user[$i]->size>3 && $user[$i]->Crop=='Maize' || $user[$i]->Crop=='Big Onion' || $user[$i]->Crop=='Potato')
+              if($user[$i]->size>5 && $user[$i]->Crop=='Paddy'){
+                $ex[$i]=$user[$i]->size-5;
+                $va[$i]=$ex[$i]*$user[$i]->claim_value_for_Acre*$user[$i]->rate+$ra[$i];
+              }
+                 
+            elseif ($user[$i]->size>3 && ($user[$i]->Crop=='Maize' || $user[$i]->Crop=='Big Onion' || $user[$i]->Crop=='Potato'))
                 {
                     $ex[$i]=$user[$i]->size-3;
                     $va[$i]=$ex[$i]*$user[$i]->claim_value_for_Acre*$user[$i]->rate+$ra[$i];
+                }
+            else{
+                    $va[$i]=$ra[$i];
                 }
             }
                // $res['message']=$va;
@@ -143,13 +149,17 @@ public function showrisks($company)
             $va=array();
             $ex=array();
                    
-            for($i=0;$i<$le;$i++){
-                if($user[$i]->size>5 && $user[$i]->Crop=='Paddy')
-                        $va[$i]=$user[$i]->size*$user[$i]->claim_value_for_Acre*$user[$i]->rate;
+           for($i=0;$i<$le;$i++){
+                if($user[$i]->size>5 && $user[$i]->Crop=='Paddy'){
+                    $ex[$i]=$user[$i]->size-5;
+                    $va[$i]=$ex[$i]*$user[$i]->claim_value_for_Acre*$user[$i]->rate;
+                }
+                       
                 if($user[$i]->size>3 && ($user[$i]->Crop=='Maize' || $user[$i]->Crop=='Big Onion' || $user[$i]->Crop=='Potato')){
                         $ex[$i]=$user[$i]->size-3;
                         $va[$i]=$ex[$i]*$user[$i]->claim_value_for_Acre*$user[$i]->rate;
                         }
+
             }
                 $res['me']=$va;
             return response($res);

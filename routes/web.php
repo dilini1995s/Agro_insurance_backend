@@ -19,6 +19,7 @@ $router->post('/register', 'FarmerController@register');
 $router->post('/finn', 'CheckController@fin');
 $router->post('/premium/{id}', 'PolicyfarmerController@addpremium');
 $router->post('/policy/{id}', 'LandController@add');
+$router->post('/agentverify/{id}', 'AgentController@agentverification');
 $router->get('/land/{nic}',['uses' =>  'LandController@getland']);
 $router->get('/agentId/{District}/{Gramasewa}/{com}',['uses' =>  'AgentController@getAgentId']);
 $router->get('/user', [ 'uses' => 'FarmerController@get_user']);

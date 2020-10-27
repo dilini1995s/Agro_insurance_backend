@@ -21,7 +21,7 @@ class CreatePolicyfarmersTable extends Migration
             $table->string('risk_type')->nullable();
             $table->string('NIC')->nullable();
 			$table->string('status')->default("pending");
-			$table->boolean('agent_verification')->default(false);
+			$table->boolean('agent_verification')->nullable();
             $table->integer('policy_id')->nullable();
 			$table->integer('Size');
 			$table->string('Crop');

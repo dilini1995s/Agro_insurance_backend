@@ -41,7 +41,9 @@ class LandController extends Controller
              'required' => 'Please fill attribute :attribute'
         ];
         $this->validate($request, $rules, $customMessages);*/
-       
+        $n=$request->input('nic');
+        $i=$request->input('id');
+       $us=Farmeragent::where('NIC', $n)->where('id', $i)->get();
         try {
             /*$user= $request->input('id');
             DB::table('farmers')
@@ -54,7 +56,10 @@ class LandController extends Controller
             
           // $user->save();
             $fa=new PolicyFarmer;
-            if( (($ag->NIC==$request->input('nic')) and ($ag->id!=$request->input('id'))) || (($ag->NIC!=$request->input('nic')) and ($ag->id==$request->input('id')))){
+            $a=$ag->NIC;
+            $g=$ag->id;
+           if($us=="[]"
+            ){
                 $ag->NIC = $request->input('nic');
                 $ag->id = $request->input('id');
                 $ag->save();
