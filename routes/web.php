@@ -16,6 +16,7 @@ $router->get('/', function () use ($router) {
 });
 $router->post('/login', 'LoginController@login');
 $router->post('/register', 'FarmerController@register');
+$router->post('/update/{nic}', 'FarmerController@updateFarmer');
 $router->post('/finn', 'CheckController@fin');
 $router->post('/premium/{id}', 'PolicyfarmerController@addpremium');
 $router->post('/policy/{id}', 'LandController@add');
@@ -25,6 +26,7 @@ $router->get('/agentId/{District}/{Gramasewa}/{com}',['uses' =>  'AgentControlle
 $router->get('/user', [ 'uses' => 'FarmerController@get_user']);
 $router->get('/company', [ 'uses' => 'CompanyController@showcompanies']);
 $router->get('/detail/{va}', [ 'uses' => 'PolicyController@showPolicy']);
+$router->get('/allpolicy/{nic}', [ 'uses' => 'PolicyfarmerController@showAllPolicy']);
 $router->get('/de/{va1}/{va2}', [ 'uses' => 'PolicyfarmerController@showfarmersPolicy']);
 $router->get('/getpolicy/{id}', [ 'uses' => 'PolicyfarmerController@showPolicy']);
 $router->get('/risk1/{va1}/{va2}', [ 'uses' => 'PolicyRiskCropController@showfarmersPolicyrisks1']);

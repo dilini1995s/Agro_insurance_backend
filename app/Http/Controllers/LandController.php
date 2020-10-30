@@ -82,6 +82,7 @@ class LandController extends Controller
             $fa->Crop= $request->input('crop');
             $fa->policy_id=$request->input('type');
             $fa->NIC= $request->input('nic');
+           $fa->documents=$request->input('img');
             
         if( $request->input('selectland')==""){
                 $fa->land_number = $request->input('land_num');

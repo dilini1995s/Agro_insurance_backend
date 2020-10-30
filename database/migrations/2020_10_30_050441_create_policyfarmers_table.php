@@ -26,6 +26,7 @@ class CreatePolicyfarmersTable extends Migration
 			$table->integer('Size');
 			$table->string('Crop');
 			$table->string('land_number');
+			$table->longText('documents')->nullable();
             $table->timestamps();
         });
     }
