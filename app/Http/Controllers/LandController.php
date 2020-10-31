@@ -72,6 +72,9 @@ class LandController extends Controller
             $land->District = $request->input('district');
             $land->Owership = $request->input('owership');
             $land->NIC= $request->input('nic');
+            $land->Address= $request->input('address');
+            $land->latitude= $request->input('latitude');
+            $land->longitude= $request->input('longitude');
             $land->save();
         }
 
