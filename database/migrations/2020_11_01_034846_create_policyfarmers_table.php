@@ -18,6 +18,7 @@ class CreatePolicyfarmersTable extends Migration
             $table->string('start_date');
             $table->string('end_date');
             $table->integer('premium')->nullable();
+			$table->integer('PaidAmount')->nullable()->default(0);
             $table->string('risk_type')->nullable();
             $table->string('NIC')->nullable();
 			$table->string('status')->default("pending");

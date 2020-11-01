@@ -26,12 +26,17 @@ $router->get('/agentId/{District}/{Gramasewa}/{com}',['uses' =>  'AgentControlle
 $router->get('/user', [ 'uses' => 'FarmerController@get_user']);
 $router->get('/company', [ 'uses' => 'CompanyController@showcompanies']);
 $router->get('/getclients/{companyId}', [ 'uses' => 'CompanyController@getfamers']);
+$router->post('/updateamount/{policyid}', 'CompanyController@updateAmount');
+$router->post('/companypolicyverification/{policyid}', 'CompanyController@companypolicyverification');
 $router->get('/onefarmer/{nic}', [ 'uses' => 'CompanyController@getselectedfarmerPolicy']);
 $router->get('/farmerspolicy/{nic}', [ 'uses' => 'CompanyController@getselectedfarmerdetails']);
 $router->get('/activepolicy/{nic}/{com}', [ 'uses' => 'CompanyController@showactivePolicy']);
+$router->get('/getcompanypolicies/{companyid}', [ 'uses' => 'CompanyController@getselectedCompanyPolicy']);
+$router->get('/getrequestpolicy/{companyid}', [ 'uses' => 'CompanyController@showRequestPolicies']);
 $router->get('/detail/{va}', [ 'uses' => 'PolicyController@showPolicy']);
 $router->get('/allpolicy/{nic}', [ 'uses' => 'PolicyfarmerController@showAllPolicy']);
 $router->get('/de/{va1}/{va2}', [ 'uses' => 'PolicyfarmerController@showfarmersPolicy']);
+$router->get('/getactivePremium/{nic}/{companyid}', [ 'uses' => 'PolicyfarmerController@showActivepremium']);
 $router->get('/getpolicy/{id}', [ 'uses' => 'PolicyfarmerController@showPolicy']);
 $router->get('/risk1/{va1}/{va2}', [ 'uses' => 'PolicyRiskCropController@showfarmersPolicyrisks1']);
 $router->get('/risk2/{va1}/{va2}', [ 'uses' => 'PolicyRiskCropController@showfarmersPolicySanasa']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 use App\Insurancecom;
 use App\Insurance;
 use App\PolicyFarmer;
@@ -127,8 +128,9 @@ class CompanyController extends Controller
           
         try{
             $user= Policyfarmer::where('policyfarmers.NIC',$nic)->where('insurances.companies_id',$com)->where('policyfarmers.status',['ACTIVE','CLOSED'])
-            ->join('insurances','insurances.id','policyfarmers.policy_id')
-           ->get();
+            ->join('insurances','insurances.id','policyfarmers.policy_id')->select('policyfarmers.id','policyfarmers.premium','policyfarmers.PaidAmount',
+            'insurances.name')->get();
+   
                 $res['status'] = true;
                 $res['message'] = $user;
                 return response($res, 200);
@@ -137,6 +139,83 @@ class CompanyController extends Controller
         catch (\Illuminate\Database\QueryException $ex) {
             $res['status'] = false;
             $res['message'] = 'Cannot find user!';
+            return response($res, 500);
+        }
+          
+    } 
+    public function updateAmount(Request $request,$policyid){
+
+        try{
+            $policy=new PolicyFarmer;
+            $ge=PolicyFarmer::select('PaidAmount')->get();
+            $va=$ge[0]->PaidAmount+$request->input('amount');
+            DB::table('policyfarmers')->where('id',$policyid)->update(['PaidAmount'=>$va]);
+        
+            $res['status'] = true;
+            $res['message'] = $ge;
+            return response($res, 200);
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $res['status'] = false;
+            $res['message'] = $ex->getMessage();
+            return response($res, 500);
+        }
+    }
+    public function getselectedCompanyPolicy($companyid)
+    {
+          
+        try{
+            $user= Insurance::where('companies_id',$companyid)->get();
+   
+                $res['status'] = true;
+                $res['message'] = $user;
+                return response($res, 200);
+            }
+            
+        catch (\Illuminate\Database\QueryException $ex) {
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res, 500);
+        }
+          
+    } 
+    public function showRequestPolicies($companyid){
+
+        $user=PolicyFarmer::whereIn('agent_verification',[1,0])->where('status','Pending')
+            ->join('insurances','insurances.id','policyfarmers.policy_id')->where('insurances.companies_id',$companyid)->select('policyfarmers.id','insurances.Name')->get();
+        if ($user)
+        {
+            $res['status'] = true;
+            $res['message'] = $user;
+            
+           
+            return response($res);
+                //$res['me']=$user1; 
+          
+            return response($res);
+        } 
+        else{
+                $res['status'] = false;
+                $res['message'] = 'Cannot find user!';
+    
+             return response($res);
+         }
+    }
+    public function companypolicyverification(Request $request, $policyid)
+        {
+            $user= Policyfarmer::findOrFail($policyid);
+
+            $user->status= $request->input('ver');
+           // $id=$request->input('land_num');
+            try{
+                $user->save();
+                $res['status'] = true;
+                $res['message'] = 'insert success!';
+                return response($res, 200);
+            }
+            
+        catch (\Illuminate\Database\QueryException $ex) {
+            $res['status'] = false;
+            $res['message'] = $ex->getMessage();
             return response($res, 500);
         }
           
