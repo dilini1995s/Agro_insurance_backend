@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Insurancecom;
 use App\Insurance;
 use App\PolicyFarmer;
+use App\Policycrop;
 use App\Farmer;
 class CompanyController extends Controller
 {
@@ -52,7 +53,7 @@ class CompanyController extends Controller
         //$user1=Insurance::select('companies_id','insurances.Name')->get();
        
         $user=Insurance::where('companies_id',$companyId)->join('policyfarmers','policyfarmers.policy_id','insurances.id')
-        ->join('farmers','farmers.NIC','policyfarmers.NIC')->get();  
+        ->join('farmers','farmers.NIC','policyfarmers.NIC')->select('farmers.Name','farmers.NIC')->distinct()->get();  
         //return response()->json(Insurancecom::all());
         if ($user)
         {
@@ -99,7 +100,7 @@ class CompanyController extends Controller
 
         //$user1=Insurance::select('companies_id','insurances.Name')->get();
        
-        $user= Policyfarmer::where('policyfarmers.NIC',$nic)->where('policyfarmers.status','pending')
+        $user= Policyfarmer::where('policyfarmers.NIC',$nic)->whereIn('policyfarmers.status',['active','closed'])
             ->join('farmers','farmers.NIC','policyfarmers.NIC')->join('insurances','insurances.id','policyfarmers.policy_id')->join('insurancecoms','insurancecoms.id','insurances.companies_id')
             ->get();
                 $res['status'] = true;
@@ -219,5 +220,27 @@ class CompanyController extends Controller
             return response($res, 500);
         }
           
+    }
+    public function showCropdetails($policyid){
+
+        $user=Policycrop::where('insurance_id',$policyid)
+            ->join('crops','crops.id','policycrops.crop_id')->get();
+        if ($user)
+        {
+            $res['status'] = true;
+            $res['message'] = $user;
+            
+           
+            return response($res);
+                //$res['me']=$user1; 
+          
+            return response($res);
+        } 
+        else{
+                $res['status'] = false;
+                $res['message'] = 'Cannot find user!';
+    
+             return response($res);
+         }
     }   
 }

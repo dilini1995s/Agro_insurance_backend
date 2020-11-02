@@ -111,7 +111,8 @@ class PolicyfarmerController extends Controller
           
         try{
             $user= Policyfarmer::where('policyfarmers.id',$id)->join('insurances','insurances.id','policyfarmers.policy_id')
-            ->select('policyfarmers.id','policyfarmers.premium','policyfarmers.agent_verification','policyfarmers.Crop','policyfarmers.start_date','policyfarmers.end_date','documents','NIC','risk_type')->get();
+            ->select('policyfarmers.id','policyfarmers.premium','policyfarmers.agent_verification','policyfarmers.Crop','policyfarmers.start_date',
+            'policyfarmers.end_date','documents','NIC','risk_type','land_number')->get();
                 $res['status'] = true;
                 $res['message'] = $user;
                 return response($res, 200);
@@ -129,7 +130,7 @@ class PolicyfarmerController extends Controller
     {
           
         try{
-            $user= Policyfarmer::where('policyfarmers.NIC',$nic)->where('policyfarmers.status',['ACTIVE','CLOSED'])
+            $user= Policyfarmer::where('policyfarmers.NIC',$nic)->whereIn('policyfarmers.status',['ACTIVE','CLOSED'])
             ->join('insurances','insurances.id','policyfarmers.policy_id')->join('insurancecoms','insurancecoms.id','insurances.companies_id')
             ->select('policyfarmers.id','insurances.Name','policyfarmers.status','insurancecoms.name')->get();
                 $res['status'] = true;

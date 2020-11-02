@@ -33,6 +33,7 @@ $router->get('/farmerspolicy/{nic}', [ 'uses' => 'CompanyController@getselectedf
 $router->get('/activepolicy/{nic}/{com}', [ 'uses' => 'CompanyController@showactivePolicy']);
 $router->get('/getcompanypolicies/{companyid}', [ 'uses' => 'CompanyController@getselectedCompanyPolicy']);
 $router->get('/getrequestpolicy/{companyid}', [ 'uses' => 'CompanyController@showRequestPolicies']);
+$router->get('/getcropsdetail/{policyid}', [ 'uses' => 'CompanyController@showCropdetails']);
 $router->get('/detail/{va}', [ 'uses' => 'PolicyController@showPolicy']);
 $router->get('/allpolicy/{nic}', [ 'uses' => 'PolicyfarmerController@showAllPolicy']);
 $router->get('/de/{va1}/{va2}', [ 'uses' => 'PolicyfarmerController@showfarmersPolicy']);
