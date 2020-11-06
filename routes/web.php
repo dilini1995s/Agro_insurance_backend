@@ -28,6 +28,9 @@ $router->get('/company', [ 'uses' => 'CompanyController@showcompanies']);
 $router->get('/getclients/{companyId}', [ 'uses' => 'CompanyController@getfamers']);
 $router->post('/updateamount/{policyid}', 'CompanyController@updateAmount');
 $router->post('/companypolicyverification/{policyid}', 'CompanyController@companypolicyverification');
+$router->post('/updaterating/{nic}', 'CompanyController@updateRating');
+$router->post('/updatepolicycrops/{policyid}', 'PolicyCropController@updatecropsdetail');
+//$router->get('/updatepolicycrops/{policyid}', ['uses'=>'PolicyCropController@updatecropsdetail']);
 $router->get('/onefarmer/{nic}', [ 'uses' => 'CompanyController@getselectedfarmerPolicy']);
 $router->get('/farmerspolicy/{nic}', [ 'uses' => 'CompanyController@getselectedfarmerdetails']);
 $router->get('/activepolicy/{nic}/{com}', [ 'uses' => 'CompanyController@showactivePolicy']);
@@ -45,4 +48,5 @@ $router->get('/crop/{va1}/{va2}', [ 'uses' => 'PolicyRiskCropController@showcrop
 $router->get('/wrisk/{va1}/{va2}', [ 'uses' => 'PolicyRiskCropController@showwithoutrisk']);
 $router->get('/us', [ 'uses' => 'CompanyController@get_us']);
 $router->get('/risktypes/{company}', [ 'uses' => 'PolicyRiskCropController@showrisks']);
+
 $router->get('/agent/{com}', [ 'uses' => 'AgentController@showRequestPolicies']);

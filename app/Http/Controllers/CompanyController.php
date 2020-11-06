@@ -148,7 +148,7 @@ class CompanyController extends Controller
 
         try{
             $policy=new PolicyFarmer;
-            $ge=PolicyFarmer::select('PaidAmount')->get();
+            $ge=PolicyFarmer::where('id',$policyid)->select('PaidAmount')->get();
             $va=$ge[0]->PaidAmount+$request->input('amount');
             DB::table('policyfarmers')->where('id',$policyid)->update(['PaidAmount'=>$va]);
         
@@ -242,5 +242,33 @@ class CompanyController extends Controller
     
              return response($res);
          }
-    }   
+    }  
+    
+    public function updateRating(Request $request, $nic)
+    {
+        
+    
+        $ge=Farmer::where('NIC',$nic)->select('rating_number')->get();
+        if($ge[0]->rating_number==0){
+            $va=$ge[0]->rating_number+$request->input('rating');
+        }
+        else{
+            $va=($ge[0]->rating_number+$request->input('rating'))/2;   
+        }
+       
+        DB::table('farmers')->where('NIC',$nic)->update(['rating_number'=>$va]);
+        try{
+           
+            $res['status'] = true;
+            $res['message'] = 'insert success!';
+            return response($res, 200);
+        }
+        
+    catch (\Illuminate\Database\QueryException $ex) {
+        $res['status'] = false;
+        $res['message'] = $ex->getMessage();
+        return response($res, 500);
+    }
+      
+} 
 }

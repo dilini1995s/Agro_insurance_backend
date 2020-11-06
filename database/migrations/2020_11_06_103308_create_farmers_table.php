@@ -20,6 +20,7 @@ class CreateFarmersTable extends Migration
             $table->integer('Phone');
             $table->string('DOB')->nullable();
             $table->string('Password');
+			$table->float('rating_number')->default(0);
             $table->foreignId('Agent_id')->nullable();
             $table->timestamps();
         });
