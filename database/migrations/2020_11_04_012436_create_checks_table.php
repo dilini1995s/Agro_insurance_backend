@@ -14,7 +14,7 @@ class CreateChecksTable extends Migration
     public function up()
     {
         Schema::create('checks', function (Blueprint $table) {
-            $table->string("id")->primary();
+            $table->id()->startingValue(1200);
             $table->string("name");
             $table->string("crop");
             $table->timestamps();

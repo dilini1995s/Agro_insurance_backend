@@ -110,7 +110,9 @@ class PolicyfarmerController extends Controller
     {
           
         try{
-            $user= Policyfarmer::where('policyfarmers.id',$id)->join('insurances','insurances.id','policyfarmers.policy_id')->get();
+            $user= Policyfarmer::where('policyfarmers.id',$id)->join('insurances','insurances.id','policyfarmers.policy_id')
+            ->select('policyfarmers.id','policyfarmers.premium','policyfarmers.agent_verification','policyfarmers.Crop','policyfarmers.start_date',
+            'policyfarmers.end_date','documents','NIC','risk_type','land_number')->get();
                 $res['status'] = true;
                 $res['message'] = $user;
                 return response($res, 200);
@@ -142,5 +144,25 @@ class PolicyfarmerController extends Controller
             return response($res, 500);
         }
           
-    }   
+    }  
+    public function showActivepremium($nic,$companyid)
+    {
+          
+        try{
+            $user= Policyfarmer::where('policyfarmers.NIC',$nic)->where('insurances.company_id',$companyid)->where('policyfarmers.status','ACTIVE')
+            ->where('policyfarmers.premium','>',0)->join('insurances','insurances.id','policyfarmers.policy_id')
+            ->select('policyfarmers.id','policyfarmers.premium','policyfarmers.agent_verification','policyfarmers.Crop','policyfarmers.start_date','policyfarmers.end_date','documents','NIC','risk_type')
+            ->get();
+                $res['status'] = true;
+                $res['message'] = $user;
+                return response($res, 200);
+            }
+            
+        catch (\Illuminate\Database\QueryException $ex) {
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res, 500);
+        }
+          
+    }    
 }

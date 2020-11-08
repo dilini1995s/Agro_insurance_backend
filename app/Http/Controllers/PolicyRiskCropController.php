@@ -43,7 +43,7 @@ public function showrisks($company)
     }         
   public function showfarmersPolicyrisks1($va1,$va2)
     {
-     $user=Policyfarmer::where('policyfarmers.NIC', $va1)->where('policyfarmers.status', 'active')->where('company_id', $va2)->join('insurances','insurances.id','policyfarmers.policy_id')
+     $user=Policyfarmer::where('policyfarmers.id', $va1)->where('policyfarmers.status', 'active')->where('company_id', $va2)->join('insurances','insurances.id','policyfarmers.policy_id')
        ->join('policyrisks','insurance_id','insurances.id')->join('risks','risks.risk_type','policyfarmers.risk_type')
        ->join('policycrops','policycrops.insurance_id','insurances.id')->join('crops','crops.name','policyfarmers.Crop')
        ->select('policyfarmers.id','status','policyfarmers.risk_type','policyfarmers.Crop','size','insurances.Name','risks.risk_rate','policycrops.claim_value_for_Acre','policycrops.rate')
@@ -92,7 +92,7 @@ public function showrisks($company)
     public function showfarmersPolicySanasa($va1,$va2)
     {
            
-        $crop=Policyfarmer::where('policyfarmers.NIC', $va1)->where('company_id', $va2)->where('policyfarmers.status', 'active')
+        $crop=Policyfarmer::where('policyfarmers.id', $va1)->where('company_id', $va2)->where('policyfarmers.status', 'active')
                 ->join('insurances','insurances.id','policyfarmers.policy_id')->select('Crop')->get();
                 
                 $cr=array();
@@ -101,7 +101,7 @@ public function showrisks($company)
                     $cr[$i]=$crop[$i]->Crop;
                 }  
                 $res['cr']=$cr;       
-      $user=Policyfarmer::where('policyfarmers.NIC', $va1)->where('company_id', $va2)
+      $user=Policyfarmer::where('policyfarmers.id', $va1)->where('company_id', $va2)
         ->join('insurances','insurances.id','policyfarmers.policy_id')
         ->join('policycrops','policycrops.insurance_id','insurances.id')
         ->join('crops','crops.id','policycrops.crop_id')->where('crops.name','=' ,$cr)
@@ -133,7 +133,7 @@ public function showrisks($company)
              
  public function showwithoutrisk($va1,$va2)
     {
-      $user=Policyfarmer::where('policyfarmers.NIC', $va1)->where('company_id', $va2)->where('policyfarmers.status', 'active')->where('policyfarmers.risk_type',NULL)
+      $user=Policyfarmer::where('policyfarmers.id', $va1)->where('company_id', $va2)->where('policyfarmers.status', 'active')->where('policyfarmers.risk_type',NULL)
         ->join('insurances','insurances.id','policyfarmers.policy_id')
         ->join('policyrisks','insurance_id','insurances.id')->join('policycrops','policycrops.insurance_id','insurances.id')
         ->join('crops','crops.name','policyfarmers.Crop')->select('policyfarmers.id','status','policyfarmers.risk_type',
