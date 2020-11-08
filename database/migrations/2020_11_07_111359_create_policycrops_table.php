@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFarmeragentsTable extends Migration
+class CreatePolicycropsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateFarmeragentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('farmeragents', function (Blueprint $table) {
-            $table->string('NIC');
-            $table->integer('id');
+        Schema::create('policycrops', function (Blueprint $table) {
+            $table->unsignedInteger('insurance_id');
+            $table->unsignedBigInteger('crop_id');
+            $table->integer('claim_value_for_Acre');
+            $table->float('rate');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateFarmeragentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('farmeragents');
+        Schema::dropIfExists('policycrops');
     }
 }

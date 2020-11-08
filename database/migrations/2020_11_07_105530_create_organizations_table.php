@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePolicycropsTable extends Migration
+class CreateOrganizationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreatePolicycropsTable extends Migration
      */
     public function up()
     {
-        Schema::create('policycrops', function (Blueprint $table) {
-            $table->foreignId('insurance_id');
-            $table->foreignId('crop_id');
-            $table->integer('claim_value_for_Acre');
-            $table->float('rate');
+        Schema::create('organizations', function (Blueprint $table) {
+            $table->id();
+            $table->string('Name');
+            $table->string('Gramaseva_division');
+            $table->string('District');
+			$table->string('NIC');
+			$table->string('Password');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreatePolicycropsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('policycrops');
+        Schema::dropIfExists('organizations');
     }
 }

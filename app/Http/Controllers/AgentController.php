@@ -27,7 +27,7 @@ class AgentController extends Controller
         /*$user=Agent::where('agents.company_id',$com)->join('farmeragents','farmeragents.id','agents.id')->join('farmers','farmers.NIC','farmeragents.NIC')
             ->join('policyfarmers','policyfarmers.NIC','farmers.NIC')->select('policyfarmers.id')->get(); */ 
         //return response()->json(Insurancecom::all());
-        $user=Agent::where('agents.company_id',$com)->where('policyfarmers.agent_verification',NULL)->join('insurancecoms','insurancecoms.id','agents.company_id')->join('insurances','insurances.companies_id','insurancecoms.id')
+        $user=Agent::where('agents.company_id',$com)->where('policyfarmers.agent_verification',NULL)->join('insurancecoms','insurancecoms.id','agents.company_id')->join('insurances','insurances.company_id','insurancecoms.id')
             ->join('policyfarmers','policyfarmers.policy_id','insurances.id')->select('policyfarmers.id','insurances.Name')->get();
         if ($user)
         {

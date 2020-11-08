@@ -39,11 +39,7 @@ class FarmerController extends Controller
             DB::table('farmers')->where('NIC',$nic)->update(['Name'=>$na,'Phone'=>$ph,'Address'=>$ad]);
       
       
-        //$us=Farmer::where('NIC',$nic)->update();
-       // $us->Name=$request->input('name');
-        //$us->Phone=$request->input('phone');
-        //$us->Address=$request->input('address');
-        //$us->save();
+       
            $res['status'] = true;
             $res['message'] = 'insert success!';
             return response($res, 200);

@@ -14,13 +14,13 @@ class CreateInsurancesTable extends Migration
     public function up()
     {
         Schema::create('insurances', function (Blueprint $table) {
-            
-	$table->increments('id')->start_from(1);
-    $table->string("Name")->nullable();
-    $table->string("Description")->nullable();
-    $table->string("Benefits")->nullable();
-    $table->foreignId('companies_id');
-    $table->timestamps();
+            $table->increments('id')->start_from(1);
+            $table->string("Name")->nullable();
+            $table->string("Description")->nullable();
+            $table->string("Benefits")->nullable();
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('insurancecoms')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

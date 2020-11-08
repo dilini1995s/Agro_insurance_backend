@@ -36,3 +36,7 @@ $router->get('/wrisk/{va1}/{va2}', [ 'uses' => 'PolicyRiskCropController@showwit
 $router->get('/us', [ 'uses' => 'CompanyController@get_us']);
 $router->get('/risktypes/{company}', [ 'uses' => 'PolicyRiskCropController@showrisks']);
 $router->get('/agent/{com}', [ 'uses' => 'AgentController@showRequestPolicies']);
+
+
+$router->post('/farmerissues', 'CompanyfarmerController@postfarmersIssues');
+$router->get('/getrequestissues/{nic}/{company_id}', [ 'uses' => 'CompanyfarmerController@showrequestIssues']);

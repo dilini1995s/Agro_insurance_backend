@@ -14,7 +14,7 @@ class CreatePolicyfarmersTable extends Migration
     public function up()
     {
         Schema::create('policyfarmers', function (Blueprint $table) {
-            $table->increments('id')->start_from(1000);
+            $table->id();
             $table->string('start_date');
             $table->string('end_date');
             $table->integer('premium')->nullable();
@@ -22,11 +22,11 @@ class CreatePolicyfarmersTable extends Migration
             $table->string('NIC')->nullable();
 			$table->string('status')->default("pending");
 			$table->boolean('agent_verification')->nullable();
-            $table->integer('policy_id')->nullable();
+            $table->unsignedInteger('policy_id')->nullable();
 			$table->integer('Size');
 			$table->string('Crop');
 			$table->string('land_number');
-			$table->longText('documents')->nullable();
+            $table->longText('documents')->nullable();
             $table->timestamps();
         });
     }

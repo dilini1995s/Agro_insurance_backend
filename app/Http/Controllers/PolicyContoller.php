@@ -24,7 +24,7 @@ class PolicyController extends Controller
     public function showPolicy($va)
     {
         //return response()->json(Insurance::find($companies_id));
-       $user= Insurance::where('companies_id', $va)->get();
+       $user= Insurance::where('company_id', $va)->get();
        if ($user) {
         $res['status'] = true;
         $res['message'] = $user;

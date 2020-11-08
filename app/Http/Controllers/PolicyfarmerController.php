@@ -70,7 +70,7 @@ class PolicyfarmerController extends Controller
     public function showfarmersPolicy($va1,$va2)
     {
         //return response()->json(Insurance::find($companies_id));
-       $user=Policyfarmer::where('NIC', $va1)->where('companies_id', $va2)->join('insurances',
+       $user=Policyfarmer::where('NIC', $va1)->where('company_id', $va2)->join('insurances',
        'insurances.id','policy_id')
        ->select('policyfarmers.id','status','Name')->get();
        if ($user) {
@@ -129,7 +129,7 @@ class PolicyfarmerController extends Controller
           
         try{
             $user= Policyfarmer::where('policyfarmers.NIC',$nic)->where('policyfarmers.status',['ACTIVE','CLOSED'])
-            ->join('insurances','insurances.id','policyfarmers.policy_id')->join('insurancecoms','insurancecoms.id','insurances.companies_id')
+            ->join('insurances','insurances.id','policyfarmers.policy_id')->join('insurancecoms','insurancecoms.id','insurances.company_id')
             ->select('policyfarmers.id','insurances.Name','policyfarmers.status','insurancecoms.name')->get();
                 $res['status'] = true;
                 $res['message'] = $user;

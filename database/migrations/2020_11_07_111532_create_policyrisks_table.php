@@ -14,7 +14,7 @@ class CreatePolicyrisksTable extends Migration
     public function up()
     {
         Schema::create('policyrisks', function (Blueprint $table) {
-            $table->foreignId('insurance_id');
+            $table->unsignedInteger('insurance_id');
             $table->foreignId('risk_id');
             $table->timestamps();
         });
