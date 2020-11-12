@@ -58,5 +58,45 @@ class CompanyfarmerController extends Controller
             return response($res, 500);
         }
     }
+    public function showrallrequestIssues(){
+
+        try{
+            $user= Companyfarmer::where('status','pending')->get();
+                $res['status'] = true;
+                $res['message'] = $user;
+                return response($res, 200);
+            }
+            
+        catch (\Illuminate\Database\QueryException $ex) {
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res, 500);
+        }
+    }
+
+    
+    public function postcompanyReply(Request $request){
+
+        try{
+          
+           $id=$request->input('id');
+           $answer=$request->input('answer');
+             
+                 
+            DB::table('companyfarmers')->where('id',$id)->update(['answers'=>$answer,'status'=>'replied']);
+             
+       
+             $res['status'] = true;
+             $res['message'] = 'insert success!';
+             return response($res, 200);
+         } catch (\Illuminate\Database\QueryException $ex) {
+             $res['status'] = false;
+             $res['message'] = $ex->getMessage();
+             return response($res, 500);
+         }
+         
+         
+ 
+     }
     
 }

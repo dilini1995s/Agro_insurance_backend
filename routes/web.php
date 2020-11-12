@@ -22,6 +22,7 @@ $router->post('/premium/{id}', 'PolicyfarmerController@addpremium');
 $router->post('/policy/{id}', 'LandController@add');
 $router->post('/agentverify/{id}', 'AgentController@agentverification');
 $router->get('/land/{nic}',['uses' =>  'LandController@getland']);
+$router->get('/landlocation/{land}', [ 'uses' => 'LandController@showlandlocation']);
 $router->get('/agentId/{District}/{Gramasewa}/{com}',['uses' =>  'AgentController@getAgentId']);
 $router->get('/user', [ 'uses' => 'FarmerController@get_user']);
 $router->get('/company', [ 'uses' => 'CompanyController@showcompanies']);
@@ -52,6 +53,8 @@ $router->get('/agent/{com}', [ 'uses' => 'AgentController@showRequestPolicies'])
 
 
 $router->post('/farmerissues', 'CompanyfarmerController@postfarmersIssues');
+$router->post('/companyreply', 'CompanyfarmerController@postcompanyReply');
 $router->get('/getrequestissues/{nic}/{company_id}', [ 'uses' => 'CompanyfarmerController@showrequestIssues']);
+$router->get('/getallrequestissues', [ 'uses' => 'CompanyfarmerController@showrallrequestIssues']);
 
 $router->get('/agent/{com}', [ 'uses' => 'AgentController@showRequestPolicies']);

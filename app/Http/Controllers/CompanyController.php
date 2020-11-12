@@ -25,20 +25,27 @@ class CompanyController extends Controller
 
     public function showcompanies(){
 
-        //$user1=Insurance::select('companies_id','insurances.Name')->get();
+        //$user1=Insurance::join('insurancecoms','insurancecoms.id','insurances.id')->select('insurances.Name')->get();
        
         $user=Insurancecom::all();  
         //return response()->json(Insurancecom::all());
+        // $le= count($user1);
+        // $arr=array();
+        // for($i=0;$i<$le;$i++){
+        //     $arr[$i]=$user1[$i]->Name;
+        // }
+        
+
         if ($user)
         {
             $res['status'] = true;
             $res['message'] = $user;
-            
+          
            
             return response($res);
-                //$res['me']=$user1; 
+               
           
-            return response($res);
+            
         } 
         else{
                 $res['status'] = false;

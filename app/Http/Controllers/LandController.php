@@ -134,6 +134,20 @@ class LandController extends Controller
         }
         
     }
+    public function showlandlocation($land){
+          //return response()->json(Insurance::find($companies_id));
+       $user=Land::where('land_number', $land)->get();
+       if ($user){
+            $res['status'] = true;
+            $res['message'] = $user;
 
+        return response($res);
+        }else{
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+
+         return response($res);
+        }
+    }
    
 }

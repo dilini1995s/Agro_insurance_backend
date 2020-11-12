@@ -151,8 +151,14 @@ class PolicyfarmerController extends Controller
         try{
             $user= Policyfarmer::where('policyfarmers.NIC',$nic)->where('insurances.company_id',$companyid)->where('policyfarmers.status','ACTIVE')
             ->where('policyfarmers.premium','>',0)->join('insurances','insurances.id','policyfarmers.policy_id')
-            ->select('policyfarmers.id','policyfarmers.premium','policyfarmers.agent_verification','policyfarmers.Crop','policyfarmers.start_date','policyfarmers.end_date','documents','NIC','risk_type')
+            ->select('policyfarmers.id','policyfarmers.premium','policyfarmers.agent_verification','policyfarmers.Crop','policyfarmers.PaidAmount','policyfarmers.start_date','policyfarmers.end_date','documents','NIC','risk_type')
             ->get();
+                $le=count($user);
+                $arr=array();
+                for($i=0;$i<$le;$i++){
+                    $arr[$i]=$user[$i]->premium-$user[$i]->PaidAmount;
+                }
+                $res['amount']=$arr;
                 $res['status'] = true;
                 $res['message'] = $user;
                 return response($res, 200);
