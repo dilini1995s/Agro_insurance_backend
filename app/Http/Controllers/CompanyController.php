@@ -277,5 +277,42 @@ class CompanyController extends Controller
         return response($res, 500);
     }
       
-} 
+}
+public function addnewpolicy(Request $request){
+    
+    $ins=new Insurance;
+    $ins->company_id=$request->input('company_id');
+    $ins->Name=$request->input('Name');
+    $ins->Description=$request->input('Description');
+    $ins->Benefits=$request->input('Benefits');
+    try{
+        $ins->save();
+        $res['status'] = true;
+        $res['id'] = $ins->id;
+        $res['message'] = 'insert success!';
+        return response($res, 200);
+    } catch (\Illuminate\Database\QueryException $ex) {
+        $res['status'] = false;
+        $res['message'] = $ex->getMessage();
+        return response($res, 500);
+    }
+ } 
+  public function deletepolicy($insurance_id){
+       
+    try{
+        DB::table('policycrops')->where('insurance_id','=',$insurance_id)->delete();
+        Insurance::findorFail($insurance_id)->delete();
+       // Policycrop::findorFail($insurance_id)->delete();
+       $res['status']=true;
+       $res['message'] = 'deleted successfully';
+       return response($res, 200);
+       
+    }catch (\Illuminate\Database\QueryException $ex) {
+        $res['status'] = false;
+        $res['message'] = $ex->getMessage();
+        return response($res, 500);
+    }
+       
+
+  }
 }

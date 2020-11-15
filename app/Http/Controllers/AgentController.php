@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 //use Illuminate\Validation\ValidationException;
 use App\Insurancecom;
 use App\Agent;
+use App\Farmeragent;
 use App\PolicyFarmer;
 class AgentController extends Controller
 {
@@ -20,15 +21,20 @@ class AgentController extends Controller
 
     //
 
-    public function showRequestPolicies($com){
+    public function showRequestPolicies($id,$com){
 
         //$user1=Insurance::select('companies_id','insurances.Name')->get();
        
         /*$user=Agent::where('agents.company_id',$com)->join('farmeragents','farmeragents.id','agents.id')->join('farmers','farmers.NIC','farmeragents.NIC')
             ->join('policyfarmers','policyfarmers.NIC','farmers.NIC')->select('policyfarmers.id')->get(); */ 
         //return response()->json(Insurancecom::all());
-        $user=Agent::where('agents.company_id',$com)->where('policyfarmers.agent_verification',NULL)->join('insurancecoms','insurancecoms.id','agents.company_id')->join('insurances','insurances.company_id','insurancecoms.id')
-            ->join('policyfarmers','policyfarmers.policy_id','insurances.id')->select('policyfarmers.id','insurances.Name')->get();
+        // $user=Agent::where('agents.company_id',$com)->where('policyfarmers.agent_verification',NULL)->join('insurancecoms','insurancecoms.id','agents.company_id')
+        // ->join('insurances','insurances.company_id','insurancecoms.id')->join('policyfarmers','policyfarmers.policy_id','insurances.id')
+        // ->select('policyfarmers.id','insurances.Name')->get();
+
+        $user=Farmeragent::where('policyfarmers.agent_verification',NULL)->where('farmeragents.id',$id)->join('farmers','farmers.NIC','farmeragents.NIC')->
+        join('policyfarmers','policyfarmers.NIC','farmers.NIC')->where('insurances.company_id',$com)->
+        join('insurances','insurances.id','policyfarmers.policy_id')->select('policyfarmers.id','insurances.Name')->get();
         if ($user)
         {
             $res['status'] = true;

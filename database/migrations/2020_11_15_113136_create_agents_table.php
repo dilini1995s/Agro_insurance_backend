@@ -21,7 +21,7 @@ class CreateAgentsTable extends Migration
 			$table->string('NIC');
 			$table->string('Password');
 			$table->foreignId('company_id');
-            $table->timestamps();		
+            $table->timestamps();	
         });
     }
 

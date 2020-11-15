@@ -16,7 +16,7 @@ $router->get('/', function () use ($router) {
 });
 $router->post('/login', 'LoginController@login');
 $router->post('/register', 'FarmerController@register');
-$router->post('/update/{nic}', 'FarmerController@updateFarmer');
+$router->put('/update/{nic}', 'FarmerController@updateFarmer');
 $router->post('/finn', 'CheckController@fin');
 $router->post('/premium/{id}', 'PolicyfarmerController@addpremium');
 $router->post('/policy/{id}', 'LandController@add');
@@ -27,10 +27,10 @@ $router->get('/agentId/{District}/{Gramasewa}/{com}',['uses' =>  'AgentControlle
 $router->get('/user', [ 'uses' => 'FarmerController@get_user']);
 $router->get('/company', [ 'uses' => 'CompanyController@showcompanies']);
 $router->get('/getclients/{companyId}', [ 'uses' => 'CompanyController@getfamers']);
-$router->post('/updateamount/{policyid}', 'CompanyController@updateAmount');
+$router->put('/updateamount/{policyid}', 'CompanyController@updateAmount');
 $router->post('/companypolicyverification/{policyid}', 'CompanyController@companypolicyverification');
-$router->post('/updaterating/{nic}', 'CompanyController@updateRating');
-$router->post('/updatepolicycrops/{policyid}', 'PolicyCropController@updatecropsdetail');
+$router->put('/updaterating/{nic}', 'CompanyController@updateRating');
+$router->put('/updatepolicycrops/{policyid}', 'PolicyCropController@updatecropsdetail');
 //$router->get('/updatepolicycrops/{policyid}', ['uses'=>'PolicyCropController@updatecropsdetail']);
 $router->get('/onefarmer/{nic}', [ 'uses' => 'CompanyController@getselectedfarmerPolicy']);
 $router->get('/farmerspolicy/{nic}', [ 'uses' => 'CompanyController@getselectedfarmerdetails']);
@@ -38,6 +38,10 @@ $router->get('/activepolicy/{nic}/{com}', [ 'uses' => 'CompanyController@showact
 $router->get('/getcompanypolicies/{companyid}', [ 'uses' => 'CompanyController@getselectedCompanyPolicy']);
 $router->get('/getrequestpolicy/{companyid}', [ 'uses' => 'CompanyController@showRequestPolicies']);
 $router->get('/getcropsdetail/{policyid}', [ 'uses' => 'CompanyController@showCropdetails']);
+$router->post('/addnewpolicytype', 'CompanyController@addnewpolicy');
+$router->delete('/deletepolicy/{insurance_id}', 'CompanyController@deletepolicy');
+
+$router->post('/addnewpolicytypedetails', 'PolicyCropController@addnewpolicydetails');
 $router->get('/detail/{va}', [ 'uses' => 'PolicyController@showPolicy']);
 $router->get('/allpolicy/{nic}', [ 'uses' => 'PolicyfarmerController@showAllPolicy']);
 $router->get('/de/{va1}/{va2}', [ 'uses' => 'PolicyfarmerController@showfarmersPolicy']);
@@ -57,4 +61,4 @@ $router->post('/companyreply', 'CompanyfarmerController@postcompanyReply');
 $router->get('/getrequestissues/{nic}/{company_id}', [ 'uses' => 'CompanyfarmerController@showrequestIssues']);
 $router->get('/getallrequestissues', [ 'uses' => 'CompanyfarmerController@showrallrequestIssues']);
 
-$router->get('/agent/{com}', [ 'uses' => 'AgentController@showRequestPolicies']);
+$router->get('/agent/{id}/{com}', [ 'uses' => 'AgentController@showRequestPolicies']);
