@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Farmer;
 use App\Insurancecom;
 use App\Agent;
+use App\Organization;
 class LoginController extends Controller
 {
     /**
@@ -36,6 +37,7 @@ class LoginController extends Controller
          $pass    = $request->input('Password');
          $login1 = Insurancecom::where('username', $NIC)->where('password', $pass)->first();
          $login2 = Agent::where('NIC', $NIC)->where('password', $pass)->first();
+         $login3 = Organization::where('NIC', $NIC)->where('password', $pass)->first();
         if($login1){
                 $res['data1'] =  $login1;
                 $res['message'] = 'Success loginCompany';
@@ -46,7 +48,13 @@ class LoginController extends Controller
                     $res['data2'] =  $login2;
                     $res['message'] = 'Success login Agent';
                     return response($res, 200);
-                    }       
+                    }
+         
+        if($login3){
+            $res['data2'] =  $login3;
+            $res['message'] = 'Success login Organization';
+            return response($res, 200);
+            }                         
        try {
             $login = Farmer::where('NIC', $NIC)->first();
             

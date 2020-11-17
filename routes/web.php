@@ -62,3 +62,5 @@ $router->get('/getrequestissues/{nic}/{company_id}', [ 'uses' => 'CompanyfarmerC
 $router->get('/getallrequestissues', [ 'uses' => 'CompanyfarmerController@showrallrequestIssues']);
 
 $router->get('/agent/{id}/{com}', [ 'uses' => 'AgentController@showRequestPolicies']);
+
+$router->get('/organizationId/{District}/{Gramasewa}', [ 'uses' => 'OrganizationController@getOrganizationId']);
