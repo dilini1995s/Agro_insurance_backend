@@ -64,3 +64,5 @@ $router->get('/getallrequestissues', [ 'uses' => 'CompanyfarmerController@showra
 $router->get('/agent/{id}/{com}', [ 'uses' => 'AgentController@showRequestPolicies']);
 
 $router->get('/organizationId/{District}/{Gramasewa}', [ 'uses' => 'OrganizationController@getOrganizationId']);
+
+$router->post('/claim', 'ClaimController@postclaim');

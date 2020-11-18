@@ -15,20 +15,21 @@ class CreateClaimsTable extends Migration
     {
         Schema::create('claims', function (Blueprint $table) {
             $table->id();
-            $table->Integer('policy_number');
+            $table->integer('policy_number');
             $table->float('loss_amount');
             $table->string('NIC');
 			$table->string('incident_date');
-			$table->Integer('phone');
-            $table->Integer('account_number');
+			$table->string('type_of_loss');
+			$table->integer('phone');
+            $table->integer('account_number');
 			$table->string('bank_name');
 			$table->string('branch');
             $table->string('loan_number');
 			$table->string('status')->default("pending");
 			$table->string('organization_verification')->nullable();
-            $table->foreignId('organization_id');
+            $table->foreignId('organization_id')->nullable();
             $table->foreignId('company_id');
-			$table->longText('image');
+			$table->longText('image')->nullable();
             $table->timestamps();
         });
     }

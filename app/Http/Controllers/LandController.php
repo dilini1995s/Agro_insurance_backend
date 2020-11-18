@@ -9,6 +9,7 @@ use App\Agent;
 use App\Farmer;
 use App\PolicyFarmer;
 use App\Farmeragent;
+use App\Claim;
 class LandController extends Controller
 {
     /**
@@ -22,7 +23,12 @@ class LandController extends Controller
     }
 
     //
+    public function addclaim(Request $request){
 
+        $ag=new Claim;
+        $ag->name= $request->input('nic');
+        $ag->save();
+    }
     public function add(Request $request,$id)
     {
        /* $rules = [
