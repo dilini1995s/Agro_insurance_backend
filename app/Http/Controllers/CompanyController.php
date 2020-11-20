@@ -9,6 +9,7 @@ use App\Insurance;
 use App\PolicyFarmer;
 use App\Policycrop;
 use App\Farmer;
+use App\Claim;
 class CompanyController extends Controller
 {
     /**
@@ -315,4 +316,70 @@ public function addnewpolicy(Request $request){
        
 
   }
+  public function showRequestClaimAAIB($companyid){
+
+    $user=Claim::whereIn('organization_verification',[1,0])->where('status','Pending')
+        ->where('company_id',$companyid)->get();
+    if ($user)
+    {
+        $res['status'] = true;
+        $res['message'] = $user;
+        
+       
+        return response($res);
+            //$res['me']=$user1; 
+      
+        return response($res);
+    } 
+    else{
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+
+         return response($res);
+     }
+    }  
+    
+    public function showRequestClaimSanasa($companyid){
+
+        $user=Claim::where('status','Pending')
+            ->where('company_id',$companyid)->get();
+        if ($user)
+        {
+            $res['status'] = true;
+            $res['message'] = $user;
+            
+           
+            return response($res);
+                //$res['me']=$user1; 
+          
+            return response($res);
+        } 
+        else{
+                $res['status'] = false;
+                $res['message'] = 'Cannot find user!';
+    
+             return response($res);
+         }
+    }
+
+    public function companyclaimverification(Request $request,$claim_id)
+    {
+        $user= Claim::findOrFail($claim_id);
+
+        $user->status= $request->input('verify');
+       // $id=$request->input('land_num');
+        try{
+            $user->save();
+            $res['status'] = true;
+            $res['message'] = 'insert success!';
+            return response($res, 200);
+        }
+        
+    catch (\Illuminate\Database\QueryException $ex) {
+        $res['status'] = false;
+        $res['message'] = $ex->getMessage();
+        return response($res, 500);
+    }
+      
+}
 }

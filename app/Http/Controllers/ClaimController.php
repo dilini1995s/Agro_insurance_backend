@@ -49,12 +49,66 @@ class ClaimController extends Controller
              $res['message'] = $ex->getMessage();
              return response($res, 500);
          }
-         
-         
- 
      }
     
-
+     public function showfarmerClaim($nic,$company_id)
+     {
+         //return response()->json(Insurance::find($companies_id));
+        $user=Claim::where('NIC', $nic)->where('company_id', $company_id)->get();
+        
+        if ($user) {
+         $res['status'] = true;
+         $res['message'] = $user;
+ 
+         return response($res);
+         }else{
+             $res['status'] = false;
+              $res['message'] = 'Cannot find user!';
+ 
+          return response($res);
+              }
+         }
+ 
     
-   
+   public function getclaimsforOrg($org_id){
+
+    try{
+        $user= Claim::where('organization_id',$org_id)->where('organization_verification',NULL)->get();
+        $res['status'] = true;
+        $res['message'] = $user;
+ 
+         return response($res);
+    }catch(\Illuminate\Database\QueryException $ex){
+        $res['status'] = false;
+        $res['message'] = 'Cannot find user!';
+        return response($res);
+     }
+    }
+    public function getclaimdetail($id){
+
+        try{
+            $user= Claim::where('id',$id)->get();
+            $res['status'] = true;
+            $res['message'] = $user;
+            return response($res);
+        }catch(\Illuminate\Database\QueryException $ex){
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res);
+         }
+    }
+    public function getland($id,$policy_num){
+
+        try{
+            $user= Claim::where('claims.id',$id)->where('claims.policy_number',$policy_num)->join('farmers','farmers.NIC','claims.NIC')
+            ->join('policyfarmers','policyfarmers.NIC','farmers.NIC')->get();
+            $res['status'] = true;
+            $res['message'] = $user;
+            return response($res);
+        }catch(\Illuminate\Database\QueryException $ex){
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res);
+         }
+    }
 }

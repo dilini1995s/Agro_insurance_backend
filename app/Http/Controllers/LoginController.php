@@ -51,7 +51,7 @@ class LoginController extends Controller
                     }
          
         if($login3){
-            $res['data2'] =  $login3;
+            $res['data3'] =  $login3;
             $res['message'] = 'Success login Organization';
             return response($res, 200);
             }                         

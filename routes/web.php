@@ -60,9 +60,17 @@ $router->post('/farmerissues', 'CompanyfarmerController@postfarmersIssues');
 $router->post('/companyreply', 'CompanyfarmerController@postcompanyReply');
 $router->get('/getrequestissues/{nic}/{company_id}', [ 'uses' => 'CompanyfarmerController@showrequestIssues']);
 $router->get('/getallrequestissues', [ 'uses' => 'CompanyfarmerController@showrallrequestIssues']);
+$router->get('/getclaimAAIB/{companyid}', [ 'uses' => 'CompanyController@showRequestClaimAAIB']);
+$router->get('/getclaimSANASA/{companyid}', [ 'uses' => 'CompanyController@showRequestClaimSanasa']);
+$router->post('/companyclaimverification/{claim_id}', 'CompanyController@companyclaimverification');
 
 $router->get('/agent/{id}/{com}', [ 'uses' => 'AgentController@showRequestPolicies']);
 
 $router->get('/organizationId/{District}/{Gramasewa}', [ 'uses' => 'OrganizationController@getOrganizationId']);
+$router->post('/orgverify/{id}', 'OrganizationController@orgverification');
 
 $router->post('/claim', 'ClaimController@postclaim');
+$router->get('/claimdetail/{nic}/{company_id}', [ 'uses' => 'ClaimController@showfarmerClaim']);
+$router->get('/claimOrg/{org_id}', [ 'uses' => 'ClaimController@getclaimsforOrg']);
+$router->get('/getclaim/{id}', [ 'uses' => 'ClaimController@getclaimdetail']);
+$router->get('/getlandforclaim/{id}/{policy_num}', [ 'uses' => 'ClaimController@getland']);

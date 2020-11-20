@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Insurancecom;
 use App\Organization;
 use App\Farmeragent;
-use App\PolicyFarmer;
+use App\Claim;
 class OrganizationController extends Controller
 {
     /**
@@ -40,24 +40,24 @@ class OrganizationController extends Controller
         }
         
     }
-    public function agentverification(Request $request, $id)
-        {
-            $user= Policyfarmer::findOrFail($id);
+    public function orgverification(Request $request, $id)
+    {
+        $user=Claim::findOrFail($id);
 
-            $user->agent_verification= $request->input('verify');
-           // $id=$request->input('land_num');
-            try{
-                $user->save();
-                $res['status'] = true;
-                $res['message'] = 'insert success!';
-                return response($res, 200);
-            }
-            
-        catch (\Illuminate\Database\QueryException $ex) {
-            $res['status'] = false;
-            $res['message'] = $ex->getMessage();
-            return response($res, 500);
+        $user->organization_verification=$request->input('verify');
+       // $id=$request->input('land_num');
+        try{
+            $user->save();
+            $res['status'] = true;
+            $res['message'] = 'insert success!';
+            return response($res, 200);
         }
-          
-    } 
+        
+    catch (\Illuminate\Database\QueryException $ex) {
+        $res['status'] = false;
+        $res['message'] = $ex->getMessage();
+        return response($res, 500);
+    }
+      
+} 
 }
