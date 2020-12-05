@@ -37,10 +37,8 @@ class FarmerController extends Controller
            $ph=$request->input('phone');
            $ad=$request->input('address');
             DB::table('farmers')->where('NIC',$nic)->update(['Name'=>$na,'Phone'=>$ph,'Address'=>$ad]);
-      
-      
-       
-           $res['status'] = true;
+
+            $res['status'] = true;
             $res['message'] = 'insert success!';
             return response($res, 200);
         } catch (\Illuminate\Database\QueryException $ex) {
@@ -48,10 +46,7 @@ class FarmerController extends Controller
             $res['message'] = $ex->getMessage();
             return response($res, 500);
         }
-        
-        
-
-}
+  }
 
     public function register(Request $request)
     {

@@ -112,7 +112,7 @@ class PolicyfarmerController extends Controller
         try{
             $user= Policyfarmer::where('policyfarmers.id',$id)->join('insurances','insurances.id','policyfarmers.policy_id')
             ->select('policyfarmers.id','policyfarmers.premium','policyfarmers.agent_verification','policyfarmers.Crop','policyfarmers.start_date',
-            'policyfarmers.end_date','documents','NIC','risk_type','land_number')->get();
+            'policyfarmers.end_date','documents','NIC','risk_type','land_number','agent_reply','company_reply','Size')->get();
                 $res['status'] = true;
                 $res['message'] = $user;
                 return response($res, 200);

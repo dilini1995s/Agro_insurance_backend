@@ -28,11 +28,17 @@ class LoginController extends Controller
           'NIC' => 'required',
           'Password' => 'required'
       ];
- 
+      //|regex:/^[0-9]{9}[A-Za-z]$/
+    //   $rules2 = [
+     
+    //     'NIC' => 'required|regex:/^[a-zA-Z]*$/',
+    //     'Password' => 'required'
+    // ];
         $customMessages = [
-           'required' => ':attribute tidak boleh kosong'
+           'required' => ':require correct format attribute '
       ];
         $this->validate($request, $rules, $customMessages);
+       // $this->validate($request, $rules2, $customMessages);
          $NIC    = $request->input('NIC');
          $pass    = $request->input('Password');
          $login1 = Insurancecom::where('username', $NIC)->where('password', $pass)->first();

@@ -26,7 +26,9 @@ class CreatePolicyfarmersTable extends Migration
             $table->unsignedInteger('policy_id')->nullable();
 			$table->integer('Size');
 			$table->string('Crop');
-			$table->string('land_number');
+            $table->string('land_number');
+            $table->string('agent_reply')->nullable();
+            $table->string('company_reply')->nullable();
             $table->longText('documents')->nullable();
             $table->timestamps();
 			$table->foreign('NIC')->references('NIC')->on('farmers');

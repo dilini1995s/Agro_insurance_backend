@@ -189,7 +189,7 @@ class CompanyController extends Controller
     } 
     public function showRequestPolicies($companyid){
 
-        $user=PolicyFarmer::whereIn('agent_verification',[1,0])->where('status','Pending')
+        $user=PolicyFarmer::where('agent_verification',1)->where('status','Pending')
             ->join('insurances','insurances.id','policyfarmers.policy_id')->where('insurances.company_id',$companyid)->select('policyfarmers.id','insurances.Name')->get();
         if ($user)
         {
@@ -214,6 +214,7 @@ class CompanyController extends Controller
             $user= Policyfarmer::findOrFail($policyid);
 
             $user->status= $request->input('ver');
+            $user->company_reply= $request->input('issue');
            // $id=$request->input('land_num');
             try{
                 $user->save();
@@ -382,4 +383,48 @@ public function addnewpolicy(Request $request){
     }
       
 }
+
+public function showActivePolicyforCompany($company_id){
+
+      
+    $user=DB::table('policyfarmers')->where('policyfarmers.status','active')->where('insurances.company_id',$company_id)->
+    join('insurances','insurances.id','policyfarmers.policy_id') ->select('policyfarmers.Crop', DB::raw('sum(policyfarmers.Size) as total'))
+    ->groupBy('policyfarmers.Crop')->get();
+
+    $value=DB::table('policycrops')->join('crops','crops.id','policycrops.crop_id')->select('claim_value_for_Acre','name')->get();
+        if ($user)
+         {
+            $le1= count($user);
+            $arr1=array();
+            $arr2=array();
+            $arr3=array();
+             $amount=array();   
+            for($i=0;$i<$le1;$i++){
+                $arr1[$i]=$user[$i]->Crop;
+                $arr2[$i]=$user[$i]->total;
+
+                
+            }
+            for($i=0;$i<4;$i++){
+                $arr3[$i]=$value[$i]->name;
+                for($j=0;$j<$le1;$j++)
+                    if($arr3[$i]==$arr1[$j]){
+                        $amount[$j]=$value[$i]->claim_value_for_Acre*$arr2[$j];
+                }
+            }
+
+            $res['status'] = true;
+            $res['label'] = $arr1;
+           $res['data'] = $amount;
+      
+            return response($res);
+           
+        } 
+        else{
+                $res['status'] = false;
+                $res['message'] = 'Cannot find user!';
+    
+             return response($res);
+         }
+    }
 }
