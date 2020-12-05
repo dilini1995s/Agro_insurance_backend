@@ -27,6 +27,8 @@ class CreateClaimsTable extends Migration
                 $table->string('loan_number');
                 $table->string('status')->default("pending");
                 $table->boolean('organization_verification')->nullable();
+				$table->string('company_reply')->nullable();
+				$table->string('organization_reply')->nullable();
                 $table->foreignId('organization_id')->nullable();
                 $table->foreignId('company_id');
                 $table->longText('image');

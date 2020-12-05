@@ -84,6 +84,20 @@ class ClaimController extends Controller
         return response($res);
      }
     }
+    public function getAllclaimsforOrg($org_id){
+
+        try{
+            $user= Claim::where('organization_id',$org_id)->whereIn('organization_verification',[1,0])->get();
+            $res['status'] = true;
+            $res['message'] = $user;
+     
+             return response($res);
+        }catch(\Illuminate\Database\QueryException $ex){
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res);
+         }
+        }
     public function getclaimdetail($id){
 
         try{

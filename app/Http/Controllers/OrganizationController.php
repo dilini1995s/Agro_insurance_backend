@@ -45,6 +45,8 @@ class OrganizationController extends Controller
         $user=Claim::findOrFail($id);
 
         $user->organization_verification=$request->input('verify');
+        $user->organization_reply=$request->input('issue');
+        $user->status=$request->input('status');
        // $id=$request->input('land_num');
         try{
             $user->save();
