@@ -15,6 +15,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 $router->post('/login', 'LoginController@login');
+$router->post('/officerlogin', 'LoginController@officerlogin');
 $router->post('/register', 'FarmerController@register');
 $router->put('/update/{nic}', 'FarmerController@updateFarmer');
 $router->post('/finn', 'CheckController@fin');
@@ -81,6 +82,8 @@ $router->post('/orgverify/{id}', 'OrganizationController@orgverification');
 $router->post('/claim', 'ClaimController@postclaim');
 $router->get('/claimdetail/{nic}/{company_id}', [ 'uses' => 'ClaimController@showfarmerClaim']);
 $router->get('/claimOrg/{org_id}', [ 'uses' => 'ClaimController@getclaimsforOrg']);
-$router->get('/allclaimsforOrg/{org_id}', [ 'uses' => 'ClaimController@getAllclaimsforOrg']);//get Organization verification true or false requests
+$router->get('/allclaimsforOrg/{org_id}', [ 'uses' => 'ClaimController@getAllclaimsforOrg']);//get all requests(submit for aaib)
+$router->get('/allActiveclaimsforOrg/{org_id}', [ 'uses' => 'ClaimController@getActiveclaimsforOrg']);//get active claim details(aaib)
 $router->get('/getclaim/{id}', [ 'uses' => 'ClaimController@getclaimdetail']);
+$router->get('/getclaimhistory/{org_id}', [ 'uses' => 'ClaimController@gethistoryforOrg']);//organization verification true or false
 $router->get('/getlandforclaim/{id}/{policy_num}', [ 'uses' => 'ClaimController@getland']);

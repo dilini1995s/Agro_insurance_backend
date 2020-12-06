@@ -319,7 +319,7 @@ public function addnewpolicy(Request $request){
   }
   public function showRequestClaimAAIB($companyid){
 
-    $user=Claim::whereIn('organization_verification',[1,0])->where('status','Pending')
+    $user=Claim::whereIn('organization_verification',[1,0])->where('status','pending')
         ->where('company_id',$companyid)->get();
     if ($user)
     {

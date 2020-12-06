@@ -16,6 +16,7 @@ class CreateOrganizationsTable extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
             $table->string('Name');
+			$table->string('username');
             $table->string('Gramaseva_division');
             $table->string('District');
 			$table->string('NIC');

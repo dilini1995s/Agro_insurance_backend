@@ -16,12 +16,13 @@ class CreateAgentsTable extends Migration
         Schema::create('agents', function (Blueprint $table) {
             $table->id();
             $table->string('Name');
+			$table->string('username');
             $table->string('Gramaseva_division');
             $table->string('District');
 			$table->string('NIC');
 			$table->string('Password');
 			$table->foreignId('company_id');
-            $table->timestamps();	
+            $table->timestamps();		
         });
     }
 
