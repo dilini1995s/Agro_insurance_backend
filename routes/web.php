@@ -14,16 +14,27 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+//login for farmer
 $router->post('/login', 'LoginController@login');
+//login for officer
 $router->post('/officerlogin', 'LoginController@officerlogin');
+//farmer register
 $router->post('/register', 'FarmerController@register');
+//update farmer details
 $router->put('/update/{nic}', 'FarmerController@updateFarmer');
-$router->post('/finn', 'CheckController@fin');
+
+
 $router->post('/premium/{id}', 'PolicyfarmerController@addpremium');
+
+//submit policy form include the adding land
 $router->post('/policy/{id}', 'LandController@add');
+//agent verification
 $router->post('/agentverify/{id}', 'AgentController@agentverification');
+//get land details according to NIC
 $router->get('/land/{nic}',['uses' =>  'LandController@getland']);
+//show land acording to google map api
 $router->get('/landlocation/{land}', [ 'uses' => 'LandController@showlandlocation']);
+
 $router->get('/agentId/{District}/{Gramasewa}/{com}',['uses' =>  'AgentController@getAgentId']);
 $router->get('/user', [ 'uses' => 'FarmerController@get_user']);
 
@@ -66,7 +77,7 @@ $router->get('/policyapplyhistory/{id}/{company_id}', [ 'uses' => 'AgentControll
 $router->post('/farmerissues', 'CompanyfarmerController@postfarmersIssues');
 $router->post('/companyreply', 'CompanyfarmerController@postcompanyReply');
 $router->get('/getrequestissues/{nic}/{company_id}', [ 'uses' => 'CompanyfarmerController@showrequestIssues']);
-$router->get('/getallrequestissues', [ 'uses' => 'CompanyfarmerController@showrallrequestIssues']);
+$router->get('/getallrequestissues/{company_id}', [ 'uses' => 'CompanyfarmerController@showrallrequestIssues']);
 $router->get('/getclaimAAIB/{companyid}', [ 'uses' => 'CompanyController@showRequestClaimAAIB']);
 $router->get('/getclaimSANASA/{companyid}', [ 'uses' => 'CompanyController@showRequestClaimSanasa']);
 $router->get('/getactivePolicydetails/{company_id}', [ 'uses' => 'CompanyController@showActivePolicyforCompany']);
@@ -84,6 +95,11 @@ $router->get('/claimdetail/{nic}/{company_id}', [ 'uses' => 'ClaimController@sho
 $router->get('/claimOrg/{org_id}', [ 'uses' => 'ClaimController@getclaimsforOrg']);
 $router->get('/allclaimsforOrg/{org_id}', [ 'uses' => 'ClaimController@getAllclaimsforOrg']);//get all requests(submit for aaib)
 $router->get('/allActiveclaimsforOrg/{org_id}', [ 'uses' => 'ClaimController@getActiveclaimsforOrg']);//get active claim details(aaib)
+$router->get('/allActiveclaimsforCompany/{company_id}', [ 'uses' => 'ClaimController@getAllclaimsforCompany']);//get active claim details(aaib)
+
 $router->get('/getclaim/{id}', [ 'uses' => 'ClaimController@getclaimdetail']);
+$router->get('/getclaimforafarmer/{nic}', [ 'uses' => 'ClaimController@getclaimdetailForafarmer']);//when given nic can getclaim details 
+$router->get('/getclaimforcompany/{nic}/{company}', [ 'uses' => 'ClaimController@getclaimCompany']);
+
 $router->get('/getclaimhistory/{org_id}', [ 'uses' => 'ClaimController@gethistoryforOrg']);//organization verification true or false
 $router->get('/getlandforclaim/{id}/{policy_num}', [ 'uses' => 'ClaimController@getland']);

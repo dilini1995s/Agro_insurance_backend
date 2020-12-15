@@ -29,7 +29,7 @@ class CreatePolicyfarmersTable extends Migration
             $table->string('land_number');
             $table->string('agent_reply')->nullable();
             $table->string('company_reply')->nullable();
-            $table->longText('documents')->nullable();
+            $table->longText('documents');
             $table->timestamps();
 			$table->foreign('NIC')->references('NIC')->on('farmers');
             $table->foreign('policy_id')->references('id')->on('insurances');

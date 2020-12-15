@@ -104,6 +104,6 @@ class FarmerController extends Controller
  
           return response($res);
         }
-       console.log("hello");
+      
     }
 }

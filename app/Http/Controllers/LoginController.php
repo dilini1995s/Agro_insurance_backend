@@ -25,43 +25,54 @@ class LoginController extends Controller
 
         $rules= [
             'username' => 'required|regex:/^([A-Za-z0-9 ])+$/',
-            'Password' => 'required'
+            'Password' => 'required|regex:/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{4,}$/'
         ];
             $customMessages = [
-               'required' => ':require correct format attribute '
+               'required' => ':require correct format attributes '
           ];
-           
-                 $this->validate($request, $rules, $customMessages);
+           try{
 
-                 $username = $request->input('username');
-                 $pass= $request->input('Password');
-                 $login1 = Insurancecom::where('username', $username)->where('password', $pass)->first();
-                 $login2 = Agent::where('username', $username)->where('password', $pass)->first();
-                 $login3 = Organization::where('username', $username)->where('password', $pass)->first();
+            $this->validate($request, $rules, $customMessages);
+
+            $username = $request->input('username');
+            $pass= $request->input('Password');
+            $login1 = Insurancecom::where('username', $username)->where('password', $pass)->first();
+            $login2 = Agent::where('username', $username)->where('password', $pass)->first();
+            $login3 = Organization::where('username', $username)->where('password', $pass)->first();
                  try{
 
-                    if($login1){
+                if($login1){
                         $res['data1'] =  $login1;
                         $res['message'] = 'Success loginCompany';
                         return response($res, 200);
                         }
         
-                if($login2){
+               else if($login2){
                             $res['data2'] =  $login2;
                             $res['message'] = 'Success login Agent';
                             return response($res, 200);
                             }
                  
-                if($login3){
+               else if($login3){
                     $res['data3'] =  $login3;
                     $res['message'] = 'Success login Organization';
                     return response($res, 200);         
                  }
+                 else{
+                    //$res['data3'] =  $login3;
+                    $res['message'] = 'not found';
+                    return response($res, 401);   
+                 }
             } catch (\Illuminate\Database\QueryException $ex) {
                     $res['success'] = false;
-                    $res['message'] = $ex->getMessage();
+                    $res['message'] = "error";
                     return response($res, 500);
-                }     
+                } 
+         }catch (\Illuminate\Database\QueryException $ex) {
+                $res['success'] = false;
+                $res['message'] = $ex->getMessage();
+                return response($res, 500);
+            }         
                
     }
     public function login(Request $request)
@@ -69,7 +80,7 @@ class LoginController extends Controller
  
       $rules = [
           'NIC' => 'required|regex:/^[0-9]{9}[A-Za-z]$/',
-          'Password' => 'required'
+          'Password' => 'required|regex:/^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d^a-zA-Z0-9].{4,12}$/'
       ];
       //|regex:/^[0-9]{9}[A-Za-z]$/
      
@@ -80,27 +91,7 @@ class LoginController extends Controller
              $this->validate($request, $rules, $customMessages);
         
          $NIC = $request->input('NIC');
-        //  $pass= $request->input('Password');
-        //  $login1 = Insurancecom::where('username', $NIC)->where('password', $pass)->first();
-        //  $login2 = Agent::where('NIC', $NIC)->where('password', $pass)->first();
-        //  $login3 = Organization::where('NIC', $NIC)->where('password', $pass)->first();
-        // if($login1){
-        //         $res['data1'] =  $login1;
-        //         $res['message'] = 'Success loginCompany';
-        //         return response($res, 200);
-        //         }
-
-        // if($login2){
-        //             $res['data2'] =  $login2;
-        //             $res['message'] = 'Success login Agent';
-        //             return response($res, 200);
-        //             }
-         
-        // if($login3){
-        //     $res['data3'] =  $login3;
-        //     $res['message'] = 'Success login Organization';
-        //     return response($res, 200);
-        //     }                         
+             
        try {
             $login = Farmer::where('NIC', $NIC)->first();
             
@@ -126,17 +117,17 @@ class LoginController extends Controller
                         }
                     } else {
                         $res['success'] = false;
-                        $res['message'] = 'Username / email / password not found';
+                        $res['message'] = ' password not found';
                         return response($res, 401);
                     }
                 } else {
                     $res['success'] = false;
-                    $res['message'] = 'Username / email / password  not found';
+                    $res['message'] = 'Username not found';
                     return response($res, 401);
                 }
             } else {
                 $res['success'] = false;
-                $res['message'] = 'Username / email / password not found';
+                $res['message'] = 'Username  / password not found';
                 return response($res, 401);
             }
         } catch (\Illuminate\Database\QueryException $ex) {

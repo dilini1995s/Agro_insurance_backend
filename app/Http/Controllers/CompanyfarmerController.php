@@ -47,9 +47,9 @@ class CompanyfarmerController extends Controller
 
         try{
             $user= Companyfarmer::where('NIC',$nic)->where('company_id',$company_id)->get();
-                $res['status'] = true;
-                $res['message'] = $user;
-                return response($res, 200);
+            $res['status'] = true;
+            $res['message'] = $user;
+            return response($res, 200);
             }
             
         catch (\Illuminate\Database\QueryException $ex) {
@@ -58,13 +58,13 @@ class CompanyfarmerController extends Controller
             return response($res, 500);
         }
     }
-    public function showrallrequestIssues(){
+    public function showrallrequestIssues($company_id){
 
         try{
-            $user= Companyfarmer::where('status','pending')->get();
-                $res['status'] = true;
-                $res['message'] = $user;
-                return response($res, 200);
+            $user= Companyfarmer::where('company_id',$company_id)->where('status','pending')->get();
+            $res['status'] = true;
+            $res['message'] = $user;
+            return response($res, 200);
             }
             
         catch (\Illuminate\Database\QueryException $ex) {
@@ -94,9 +94,6 @@ class CompanyfarmerController extends Controller
              $res['message'] = $ex->getMessage();
              return response($res, 500);
          }
-         
-         
- 
      }
     
 }

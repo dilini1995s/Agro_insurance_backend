@@ -21,21 +21,21 @@ class ClaimController extends Controller
 
     public function postclaim(Request $request){
 
-        $rules = [
-            'phone' => 'required|regex:/^(0)[0-9]{9}$/' ,
-            'account' => 'required|regex:/^[0-9]+$/',
-            'amount' => 'required|regex:/^[0-9]+$/',
-        ];
+        // $rules = [
+        //     'phone' => 'required|regex:/^(0)[0-9]{9}$/' ,
+        //     'account' => 'required|regex:/^[0-9]+$/',
+        //     'amount' => 'required|regex:/^[0-9]+$/',
+        // ];
         //|regex:/^[0-9]{9}[A-Za-z]$/
       //   $rules2 = [
        
       //     'NIC' => 'required|regex:/^[a-zA-Z]*$/',
       //     'Password' => 'required'
       // ];
-          $customMessages = [
-             'required' => ':require correct format attribute '
-        ];
-          $this->validate($request, $rules, $customMessages);
+        //   $customMessages = [
+        //      'required' => ':require correct format attribute '
+        // ];
+        //   $this->validate($request, $rules, $customMessages);
        
         try{
             $claim=new Claim;
@@ -67,8 +67,7 @@ class ClaimController extends Controller
          }
      }
     
-     public function showfarmerClaim($nic,$company_id)
-     {
+    public function showfarmerClaim($nic,$company_id){
          //return response()->json(Insurance::find($companies_id));
         $user=Claim::where('NIC', $nic)->where('company_id', $company_id)->get();
         
@@ -78,7 +77,7 @@ class ClaimController extends Controller
  
          return response($res);
          }else{
-             $res['status'] = false;
+            $res['status'] = false;
               $res['message'] = 'Cannot find user!';
  
           return response($res);
@@ -86,19 +85,19 @@ class ClaimController extends Controller
          }
  
     
-   public function getclaimsforOrg($org_id){
+    public function getclaimsforOrg($org_id){
 
-    try{
-        $user= Claim::where('organization_id',$org_id)->where('organization_verification',NULL)->get();
-        $res['status'] = true;
-        $res['message'] = $user;
+         try{
+            $user= Claim::where('organization_id',$org_id)->where('organization_verification',NULL)->get();
+            $res['status'] = true;
+            $res['message'] = $user;
  
-         return response($res);
-    }catch(\Illuminate\Database\QueryException $ex){
-        $res['status'] = false;
-        $res['message'] = 'Cannot find user!';
-        return response($res);
-     }
+            return response($res);
+        }catch(\Illuminate\Database\QueryException $ex){
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res);
+        }
     }
     public function gethistoryforOrg($org_id){
 
@@ -113,7 +112,7 @@ class ClaimController extends Controller
             $res['message'] = 'Cannot find user!';
             return response($res);
          }
-        }
+    }
     public function getAllclaimsforOrg($org_id){
 
         try{
@@ -125,7 +124,7 @@ class ClaimController extends Controller
             $arr1=array();
             $arr2=array();
             $arr3=array();
-             $amount=array();   
+            $amount=array();   
             for($i=0;$i<$le1;$i++){
                 $arr1[$i]=$user[$i]->type_of_loss;
                 $arr2[$i]=$user[$i]->total;
@@ -142,12 +141,11 @@ class ClaimController extends Controller
             $res['message'] = 'Cannot find user!';
             return response($res);
          }
-        }
+    }
+    public function getAllclaimsforCompany($company_id){
 
-        public function getActiveclaimsforOrg($org_id){
-
-            try{
-                $user= Claim::where('organization_id',$org_id)->where('status','active')
+        try{
+            $user= Claim::where('company_id',$company_id)->where('status','active')
                 ->select('type_of_loss', DB::raw('count(id) as total'))
                 ->groupBy('type_of_loss')->get();
     
@@ -155,23 +153,50 @@ class ClaimController extends Controller
                 $arr1=array();
                 $arr2=array();
                 $arr3=array();
-                 $amount=array();   
-                for($i=0;$i<$le1;$i++){
-                    $arr1[$i]=$user[$i]->type_of_loss;
-                    $arr2[$i]=$user[$i]->total;
+                $amount=array();   
+            for($i=0;$i<$le1;$i++){
+                $arr1[$i]=$user[$i]->type_of_loss;
+                $arr2[$i]=$user[$i]->total;    
+                }
+            $res['status'] = true;
+            $res['label'] = $arr1;
+            $res['data'] = $arr2;
+         
+             return response($res);
+        }catch(\Illuminate\Database\QueryException $ex){
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res);
+        }
+    }
+    public function getActiveclaimsforOrg($org_id){
+
+        try{
+            $user= Claim::where('organization_id',$org_id)->where('status','active')
+                ->select('type_of_loss', DB::raw('count(id) as total'))
+                ->groupBy('type_of_loss')->get();
+    
+                $le1= count($user);
+                $arr1=array();
+                $arr2=array();
+                $arr3=array();
+                $amount=array();   
+            for($i=0;$i<$le1;$i++){
+                $arr1[$i]=$user[$i]->type_of_loss;
+                $arr2[$i]=$user[$i]->total;
 
                 }
-                $res['status'] = true;
-                $res['label'] = $arr1;
-                $res['data'] = $arr2;
+            $res['status'] = true;
+            $res['label'] = $arr1;
+            $res['data'] = $arr2;
          
-                 return response($res);
-            }catch(\Illuminate\Database\QueryException $ex){
-                $res['status'] = false;
-                $res['message'] = 'Cannot find user!';
-                return response($res);
-             }
-            }
+            return response($res);
+        }catch(\Illuminate\Database\QueryException $ex){
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res);
+        }
+    }
     public function getclaimdetail($id){
 
         try{
@@ -185,6 +210,33 @@ class ClaimController extends Controller
             return response($res);
          }
     }
+    public function getclaimdetailForafarmer($nic){
+
+        try{
+            $user= Claim::where('NIC',$nic)->where('status','Active')->get();
+            $res['status'] = true;
+            $res['message'] = $user;
+            return response($res);
+        }catch(\Illuminate\Database\QueryException $ex){
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res);
+         }
+    }
+    public function getclaimCompany($nic,$company){
+
+        try{
+            $user= Claim::where('NIC',$nic)->where('company_id',$company)->where('status','Active')->get();
+            $res['status'] = true;
+            $res['message'] = $user;
+            return response($res);
+        }catch(\Illuminate\Database\QueryException $ex){
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+            return response($res);
+         }
+    }
+    
     public function getland($id,$policy_num){
 
         try{
