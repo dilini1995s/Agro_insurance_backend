@@ -18,7 +18,7 @@ class Insurancecom extends Model
      * @var array
      */
     protected $fillable = [
-       
+       'name','description','types','phone','Address','username','password'
     ];
 
     /**

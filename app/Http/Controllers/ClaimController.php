@@ -55,15 +55,15 @@ class ClaimController extends Controller
            $claim->type_of_loss=$request->input('loss');
            $claim->image=$request->input('image');
            
-            $claim->save();
+           $claim->save();
        
-             $res['status'] = true;
-             $res['message'] = 'insert success!';
-             return response($res, 200);
+            $res['status'] = true;
+            $res['message'] = 'insert success!';
+            return response($res, 200);
          } catch (\Illuminate\Database\QueryException $ex) {
-             $res['status'] = false;
-             $res['message'] = $ex->getMessage();
-             return response($res, 500);
+            $res['status'] = false;
+            $res['message'] = $ex->getMessage();
+            return response($res, 500);
          }
      }
     
@@ -72,17 +72,17 @@ class ClaimController extends Controller
         $user=Claim::where('NIC', $nic)->where('company_id', $company_id)->get();
         
         if ($user) {
-         $res['status'] = true;
-         $res['message'] = $user;
+            $res['status'] = true;
+            $res['message'] = $user;
  
-         return response($res);
+            return response($res);
          }else{
             $res['status'] = false;
-              $res['message'] = 'Cannot find user!';
+            $res['message'] = 'Cannot find user!';
  
-          return response($res);
-              }
+            return response($res);
          }
+    }
  
     
     public function getclaimsforOrg($org_id){

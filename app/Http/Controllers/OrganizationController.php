@@ -55,11 +55,11 @@ class OrganizationController extends Controller
             return response($res, 200);
         }
         
-    catch (\Illuminate\Database\QueryException $ex) {
-        $res['status'] = false;
-        $res['message'] = $ex->getMessage();
-        return response($res, 500);
-    }
+        catch (\Illuminate\Database\QueryException $ex) {
+            $res['status'] = false;
+            $res['message'] = $ex->getMessage();
+            return response($res, 500);
+        }
       
-} 
+    } 
 }

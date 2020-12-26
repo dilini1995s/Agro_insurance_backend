@@ -19,15 +19,7 @@ class FarmerController extends Controller
     }
 
     //
-    public function find(Request $request){
-
-            $check=new Check;
-            $check->id=$request->input('id');
-            $check->name=$request->input('name');
-            $check->crop=$request->input('crop');
-            $check->save();
-
-    }
+   
     public function updateFarmer(Request $request,$nic){
 
        try{
@@ -97,12 +89,12 @@ class FarmerController extends Controller
             $res['status'] = true;
             $res['message'] = $user;
  
-          return response($res);
+            return response($res);
         }else{
             $res['status'] = false;
             $res['message'] = 'Cannot find user!';
  
-          return response($res);
+            return response($res);
         }
       
     }

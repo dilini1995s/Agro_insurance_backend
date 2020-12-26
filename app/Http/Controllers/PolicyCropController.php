@@ -39,7 +39,7 @@ class PolicyCropController extends Controller
            DB::table('policycrops')->where('insurance_id',$policyid)->where('crop_id',$cr[$i])->update(['rate'=>$ra[$i]
            ,'claim_value_for_Acre'=>$cl[$i]]);
             
-            $res['status'] = true;
+             $res['status'] = true;
              $res['message'] = 'insert success!';
              return response($res, 200);
          } catch (\Illuminate\Database\QueryException $ex) {
@@ -56,22 +56,22 @@ class PolicyCropController extends Controller
         $cr=new Policycrop;
         try{
         
-        $v1=$request->input();
-        $v2=$request->input();
-        $v3=$request->input();
-        $t1=$v1['value'];
-        $t2=$v2['rate'];
-        $t3=$v3['crop_id'];
-        $d1=$request->input('insurance_id');  
-       for($i=0;$i<4;$i++){
-         
+            $v1=$request->input();
+            $v2=$request->input();
+            $v3=$request->input();
+            $t1=$v1['value'];
+            $t2=$v2['rate'];
+            $t3=$v3['crop_id'];
+            $d1=$request->input('insurance_id');  
 
+          for($i=0;$i<4;$i++){
+         
             $d2=$t3[$i];
             $d3=$t1[$i] ;
             $cr->rate=$t2[$i] ;
             DB::insert('insert into policycrops(insurance_id,crop_id,claim_value_for_Acre,rate) values(?,?,?,?)',
             [$d1,$t3[$i],$t1[$i],$t2[$i]]);
-       }
+          }
      
             $res['status'] = true;
             $res['message'] = 'insert success!';

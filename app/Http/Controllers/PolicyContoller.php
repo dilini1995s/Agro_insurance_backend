@@ -26,13 +26,15 @@ class PolicyController extends Controller
         //return response()->json(Insurance::find($companies_id));
        $user= Insurance::where('company_id', $va)->get();
        if ($user) {
+
         $res['status'] = true;
         $res['message'] = $user;
 
         return response($res);
-  }else{
-    $res['status'] = false;
-    $res['message'] = 'Cannot find user!';
+        }else{
+            
+        $res['status'] = false;
+        $res['message'] = 'Cannot find user!';
 
     return response($res);
   }
