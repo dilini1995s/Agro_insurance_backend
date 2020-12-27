@@ -84,6 +84,7 @@ $router->get('/agent/{id}/{com}', [ 'uses' => 'AgentController@showRequestPolici
 $router->get('/applyAll/{id}/{company_id}', [ 'uses' => 'AgentController@showApplyAll']);//all requests details
 $router->get('/activeAll/{id}/{company_id}', [ 'uses' => 'AgentController@showActivePolicy']);//all active policies
 $router->get('/policyapplyhistory/{id}/{company_id}', [ 'uses' => 'AgentController@showhistory']);
+$router->get('/contactagent/{nic}/{companyid}', [ 'uses' => 'AgentController@getdetailsforContact']);
 
 $router->get('/organizationId/{District}/{Gramasewa}', [ 'uses' => 'OrganizationController@getOrganizationId']);
 $router->post('/orgverify/{id}', 'OrganizationController@orgverification');

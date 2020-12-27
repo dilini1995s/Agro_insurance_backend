@@ -211,4 +211,20 @@ class AgentController extends Controller
         }
           
     } 
+    public function getdetailsforContact($nic,$companyid){
+        $user=Agent::where('farmeragents.NIC', $nic)->where('agents.company_id', $companyid)
+        ->join('farmeragents','farmeragents.id','agents.id')->get();
+
+        if ($user){
+            $res['status'] = true;
+            $res['message'] = $user;
+
+            return response($res);
+        }else{
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
+
+            return response($res);
+        }
+    }
 }

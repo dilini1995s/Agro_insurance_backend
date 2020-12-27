@@ -21,8 +21,9 @@ class CreateAgentsTable extends Migration
             $table->string('District');
 			$table->string('NIC');
 			$table->string('Password');
+			$table->integer('phone');
 			$table->foreignId('company_id');
-            $table->timestamps();		
+            $table->timestamps();	
         });
     }
 
