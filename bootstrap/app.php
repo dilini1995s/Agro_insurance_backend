@@ -25,6 +25,7 @@ $app = new Laravel\Lumen\Application(
 
  $app->withFacades();
 
+ $app->configure('database');
  $app->withEloquent();
 
 
@@ -61,7 +62,7 @@ $app->singleton(
 */
 
 $app->configure('app');
-$app->configure('database');
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
