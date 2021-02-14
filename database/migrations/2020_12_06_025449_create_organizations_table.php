@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFarmersTable extends Migration
+class CreateOrganizationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateFarmersTable extends Migration
      */
     public function up()
     {
-        Schema::create('farmers', function (Blueprint $table) {
-            $table->string('NIC');
+        Schema::create('organizations', function (Blueprint $table) {
+            $table->id();
             $table->string('Name');
-            $table->string('Address')->nullable();
-            $table->integer('Phone');
-            $table->string('DOB')->nullable();
-            $table->string('Password');
-            $table->foreignId('Agent_id')->nullable();
+			$table->string('username');
+            $table->string('Gramaseva_division');
+            $table->string('District');
+			$table->string('NIC');
+			$table->string('Password');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateFarmersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('farmers');
+        Schema::dropIfExists('organizations');
     }
 }

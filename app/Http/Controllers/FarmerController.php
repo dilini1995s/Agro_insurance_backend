@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 use App\Farmer;
+use App\Check;
 class FarmerController extends Controller
 {
     /**
@@ -17,6 +19,34 @@ class FarmerController extends Controller
     }
 
     //
+    public function find(Request $request){
+
+            $check=new Check;
+            $check->id=$request->input('id');
+            $check->name=$request->input('name');
+            $check->crop=$request->input('crop');
+            $check->save();
+
+    }
+    public function updateFarmer(Request $request,$nic){
+
+       try{
+           $f=new Farmer;
+           $f->NIC=$nic;
+           $na=$request->input('name');
+           $ph=$request->input('phone');
+           $ad=$request->input('address');
+            DB::table('farmers')->where('NIC',$nic)->update(['Name'=>$na,'Phone'=>$ph,'Address'=>$ad]);
+
+            $res['status'] = true;
+            $res['message'] = 'insert success!';
+            return response($res, 200);
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $res['status'] = false;
+            $res['message'] = $ex->getMessage();
+            return response($res, 500);
+        }
+  }
 
     public function register(Request $request)
     {
@@ -64,16 +94,16 @@ class FarmerController extends Controller
     {
         $user = Farmer::all();
         if ($user) {
-              $res['status'] = true;
-              $res['message'] = $user;
+            $res['status'] = true;
+            $res['message'] = $user;
  
-              return response($res);
+          return response($res);
         }else{
-          $res['status'] = false;
-          $res['message'] = 'Cannot find user!';
+            $res['status'] = false;
+            $res['message'] = 'Cannot find user!';
  
           return response($res);
         }
-       console.log("hello");
+      
     }
 }
